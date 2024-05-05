@@ -1,10 +1,12 @@
 package main;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static Graph graph;
     public static Algorithm algorithm;
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
@@ -51,18 +53,22 @@ public class Main {
             System.out.println("4. Go back To Main Menu");
             System.out.print("Enter your choice: ");
             int choice = Integer.parseInt(in.nextLine());
-            if (choice == 4) return;
+            if (choice == 4)
+                return;
             System.out.print("Enter the destination node: ");
             int destination = Integer.parseInt(in.nextLine());
             switch (choice) {
                 case 1: {
                     // graph.dijkstra(source);
+                    algorithm = new Dijkstra();
+                    graph.setAlgorithm(algorithm);
+                    graph.calculateShortestPaths(source);
                     printSubMenu();
                     int subChoice = Integer.parseInt(in.nextLine());
                     if (subChoice == 1) {
-                        // use return value of dijkstra to print the path to dest
+                        printPath(source, destination);
                     } else if (subChoice == 2) {
-                       // use return value of dijkstra to print the cost to dest
+                        printCost(source, destination);
                     }
                     break;
                 }
@@ -73,7 +79,7 @@ public class Main {
                     if (subChoice == 1) {
                         // use return value of bellman to print the path
                     } else if (subChoice == 2) {
-                       // use return value of bellman to print the cost
+                        // use return value of bellman to print the cost
                     }
                     break;
                 }
@@ -85,11 +91,9 @@ public class Main {
                     printSubMenu();
                     int subChoice = Integer.parseInt(in.nextLine());
                     if (subChoice == 1) {
-                        // use return value of floyd to print the path
-                        algorithm.printPath(source,destination);
+                        printPath(source, destination);
                     } else if (subChoice == 2) {
-                       // use return value of floyd to print the cost
-                        algorithm.printCost(source,destination);
+                        printCost(source, destination);
                     }
                     break;
                 }
@@ -113,7 +117,8 @@ public class Main {
             System.out.println("3. Go back To Main Menu");
             System.out.print("Enter your choice: ");
             int choice = Integer.parseInt(in.nextLine());
-            if (choice == 3) return;
+            if (choice == 3)
+                return;
             switch (choice) {
                 case 1:
                     // call method to check negative cycle using bellman
@@ -125,5 +130,30 @@ public class Main {
                     System.out.println("Invalid choice.");
             }
         }
+    }
+
+    public static void printPath(int u, int v) {
+        List<Integer> path = algorithm.getPath(u, v);
+        if (path == null) {
+            System.out.println("No path exists between " + u + " and " + v);
+            return;
+        }
+        System.out.print("Shortest path between " + u + " and " + v + " is: ");
+        for (int i = 0; i < path.size(); i++) {
+            System.out.print(path.get(i));
+            if (i != path.size() - 1) {
+                System.out.print(" -> ");
+            }
+        }
+        System.out.println();
+    }
+
+    public static void printCost(int u, int v) {
+        int cost = algorithm.getCost(u, v);
+        if (cost == Integer.MAX_VALUE) {
+            System.out.println("No path exists between " + u + " and " + v);
+            return;
+        }
+        System.out.println("Shortest path cost between " + u + " and " + v + " is: " + cost);
     }
 }

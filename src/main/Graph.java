@@ -4,36 +4,35 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-
 public class Graph {
     private Map<Integer, List<Edge>> graph;
 
     private int numberOfNodes;
     private int numberOfEdges;
-    private int [][] costMatrix;
+    private int[][] costMatrix;
     private Algorithm algorithm;
 
     public Graph(String filePath) {
         try {
             List<String> rows = Files.readAllLines(Paths.get(filePath));
             for (String row : rows) {
-                if (row.isEmpty()) continue;
+                if (row.isEmpty())
+                    continue;
                 String[] line = row.split(" ");
                 if (line.length == 2 && numberOfNodes == 0) {
                     numberOfNodes = Integer.parseInt(line[0]);
                     numberOfEdges = Integer.parseInt(line[1]);
                     graph = new HashMap<>(numberOfNodes);
-                    costMatrix =new int[numberOfNodes][numberOfNodes];
-                    for (int i =0;i<numberOfNodes;i++)
-                        for (int j =0;j<numberOfNodes;j++)
-                            costMatrix[i][j]=Integer.MAX_VALUE;
-                }
-                else if (line.length == 3) {
+                    costMatrix = new int[numberOfNodes][numberOfNodes];
+                    for (int i = 0; i < numberOfNodes; i++)
+                        for (int j = 0; j < numberOfNodes; j++)
+                            costMatrix[i][j] = Integer.MAX_VALUE;
+                } else if (line.length == 3) {
                     int source = Integer.parseInt(line[0]);
                     int destination = Integer.parseInt(line[1]);
                     int weight = Integer.parseInt(line[2]);
                     addEdge(source, destination, weight);
-                    costMatrix[source][destination]=weight;
+                    costMatrix[source][destination] = weight;
                 }
             }
         } catch (Exception e) {
@@ -56,45 +55,35 @@ public class Graph {
     }
 
     /**
-     * Function takes the source node and applies algorithm to get all pairs shortest paths
-     * @return a boolean : True indicates negative cycles, BUT this return value is redundant
-     *                  for Dijkstra algorithm and shouldn't be used.
+     * Function takes the source node and applies algorithm to get all pairs
+     * shortest paths
+     * 
+     * @return a boolean : True indicates negative cycles, BUT this return value is
+     *         redundant
+     *         for Dijkstra algorithm and shouldn't be used.
      */
-    public boolean calculateShortestPaths(){
+    public boolean calculateShortestPaths() {
         return algorithm.calculateAllPairsShortestPaths();
     }
 
     /**
-     * Function takes the source node and applies algorithm to get shortest paths from source node
+     * Function takes the source node and applies algorithm to get shortest paths
+     * from source node
+     * 
      * @param source : The source node of the path
-     * @return a boolean : True indicates negative cycles, BUT this return value is redundant
-     *                  for Dijkstra algorithm and shouldn't be used.
+     * @return a boolean : True indicates negative cycles, BUT this return value is
+     *         redundant
+     *         for Dijkstra algorithm and shouldn't be used.
      */
-    public boolean calculateShortestPaths(int source){
+    public boolean calculateShortestPaths(int source) {
         return algorithm.calculateShortestPathsFromSource(source);
     }
 
-    public void setAlgorithm(Algorithm algorithm){
-        this.algorithm=algorithm;
+    public void setAlgorithm(Algorithm algorithm) {
+        this.algorithm = algorithm;
         this.algorithm.setCostMatrix(this.costMatrix);
         this.algorithm.setNumberOfNodes(this.numberOfNodes);
+        this.algorithm.setGraph(this.graph);
     }
 
-    private static class Edge {
-        private int weight;
-        private int destination;
-
-        public Edge(int destination, int weight) {
-            this.destination = destination;
-            this.weight = weight;
-        }
-
-        public int getDestination() {
-            return destination;
-        }
-
-        public int getWeight() {
-            return weight;
-        }
-    }
 }
