@@ -6,7 +6,6 @@ import java.util.*;
 
 import java.util.*;
 
-
 public class Graph {
     private Map<Integer, List<Edge>> graph;
     private int numberOfNodes;
@@ -17,14 +16,14 @@ public class Graph {
         try {
             List<String> rows = Files.readAllLines(Paths.get(filePath));
             for (String row : rows) {
-                if (row.isEmpty()) continue;
+                if (row.isEmpty())
+                    continue;
                 String[] line = row.split(" ");
                 if (line.length == 2 && numberOfNodes == 0) {
                     numberOfNodes = Integer.parseInt(line[0]);
                     numberOfEdges = Integer.parseInt(line[1]);
                     graph = new HashMap<>(numberOfNodes);
-                }
-                else if (line.length == 3) {
+                } else if (line.length == 3) {
                     int source = Integer.parseInt(line[0]);
                     int destination = Integer.parseInt(line[1]);
                     int weight = Integer.parseInt(line[2]);
@@ -51,27 +50,33 @@ public class Graph {
     }
 
     /**
-     * Function takes the source node and applies algorithm to get all pairs shortest paths
-     * @return a boolean : True indicates negative cycles, BUT this return value is redundant
-     *                  for Dijkstra algorithm and shouldn't be used.
+     * Function takes the source node and applies algorithm to get all pairs
+     * shortest paths
+     * 
+     * @return a boolean : True indicates negative cycles, BUT this return value is
+     *         redundant
+     *         for Dijkstra algorithm and shouldn't be used.
      */
-    public boolean calculateShortestPaths(){
+    public boolean calculateShortestPaths() {
         return algorithm.calculateAllPairsShortestPaths();
     }
 
     /**
-     * Function takes the source node and applies algorithm to get shortest paths from source node
+     * Function takes the source node and applies algorithm to get shortest paths
+     * from source node
+     * 
      * @param source : The source node of the path
-     * @return a boolean : True indicates negative cycles, BUT this return value is redundant
-     *                  for Dijkstra algorithm and shouldn't be used.
+     * @return a boolean : True indicates negative cycles, BUT this return value is
+     *         redundant
+     *         for Dijkstra algorithm and shouldn't be used.
      */
-    public boolean calculateShortestPaths(int source){
+    public boolean calculateShortestPaths(int source) {
         return algorithm.calculateShortestPathsFromSource(source);
     }
 
-    public void setAlgorithm(Algorithm algorithm){
-        this.algorithm=algorithm;
-        this.algorithm.setGraph(this.graph);
+    public void setAlgorithm(Algorithm algorithm) {
+        this.algorithm = algorithm;
         this.algorithm.setNumberOfNodes(this.numberOfNodes);
+        this.algorithm.setGraph(this.graph);
     }
 }

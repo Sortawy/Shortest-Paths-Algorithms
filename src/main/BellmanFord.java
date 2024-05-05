@@ -16,13 +16,13 @@ public class BellmanFord implements Algorithm {
     }
 
     @Override
-    public void printPath(int u, int v) {
-
+    public List<Integer> getPath(int u, int v) {
+        return null;
     }
 
     @Override
-    public void printCost(int u, int v) {
-
+    public int getCost(int u, int v) {
+        return 0;
     }
 
     @Override
