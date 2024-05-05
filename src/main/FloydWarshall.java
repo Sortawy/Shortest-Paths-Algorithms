@@ -106,11 +106,6 @@ public class FloydWarshall implements Algorithm {
     }
 
     @Override
-    public void setCostMatrix(int[][] costMatrix) {
-        this.costMatrix = costMatrix;
-    }
-
-    @Override
     public List<Integer> getPath(int u, int v) {
         List<Integer> path = this.floydAllPaths[u][v];
         if (path.isEmpty()) {

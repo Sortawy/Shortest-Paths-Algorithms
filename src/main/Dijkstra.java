@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 
-import main.Graph;
-
 public class Dijkstra implements Algorithm {
 
     private Map<Integer, List<Edge>> graph;
@@ -49,7 +47,6 @@ public class Dijkstra implements Algorithm {
         while (!pq.isEmpty()) {
             Edge edge = pq.poll();
             int u = edge.getDestination();
-            int weight = edge.getWeight();
             marked[u] = true;
             for (Edge neighbour : graph.get(u)) {
                 int v = neighbour.getDestination();
@@ -101,11 +98,5 @@ public class Dijkstra implements Algorithm {
 
     public void setGraph(Map<Integer, List<Edge>> graph) {
         this.graph = graph;
-    }
-
-    @Override
-    public void setCostMatrix(int[][] costMatrix) {
-        // this.costMatrix = costMatrix;
-        // Not required for Dijkstra
     }
 }

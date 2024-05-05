@@ -14,7 +14,5 @@ public interface Algorithm {
 
     void setNumberOfNodes(int numberOfNodes);
 
-    void setCostMatrix(int[][] costMatrix);
-
     void setGraph(Map<Integer, java.util.List<Edge>> graph);
 }

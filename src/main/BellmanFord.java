@@ -31,11 +31,6 @@ public class BellmanFord implements Algorithm {
     }
 
     @Override
-    public void setCostMatrix(int[][] costMatrix) {
-
-    }
-
-    @Override
     public void setGraph(Map<Integer, java.util.List<Edge>> graph) {
 
     }

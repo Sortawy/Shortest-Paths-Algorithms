@@ -81,7 +81,6 @@ public class Graph {
 
     public void setAlgorithm(Algorithm algorithm) {
         this.algorithm = algorithm;
-        this.algorithm.setCostMatrix(this.costMatrix);
         this.algorithm.setNumberOfNodes(this.numberOfNodes);
         this.algorithm.setGraph(this.graph);
     }
