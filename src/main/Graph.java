@@ -202,7 +202,7 @@ public class Graph {
     /*================Floyd END================*/
 
     /*================Bellman================*/
-    public boolean bellmanFordPaths(int source, int[] cost, int[] parent){
+    public boolean bellmanFordPath(int source, int[] cost, int[] parent){
        
         for (int i = 0; i < numberOfNodes; i++) {
             cost[i] = Integer.MAX_VALUE;
@@ -262,7 +262,7 @@ public class Graph {
         
         for (int i = 0; i < numberOfNodes; i++){
             if (!visited[i]){
-                if (!bellmanFordPaths(i,cost,parent)){
+                if (!bellmanFordPath(i,cost,parent)){
                     return true;
                 }
                 for (int j = 0; j < numberOfNodes; j++)
@@ -272,6 +272,13 @@ public class Graph {
         
         }
         return false;
+    }
+    public void bellmanFordAllPaths(int [][]costMatrix){
+        for (int i = 0; i < numberOfNodes; i++){
+            int cost[] = new int[numberOfNodes];
+            int parent[] = new int[numberOfNodes];
+            bellmanFordPath(i,cost,parent);
+        }
     }
     /*================Bellman END================*/
 }
