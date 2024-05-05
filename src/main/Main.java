@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     public static Graph graph;
+    public static Algorithm algorithm;
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
 
@@ -76,14 +77,19 @@ public class Main {
                     }
                     break;
                 }
-                case 3: {
+                case 3: { // chosen floyd algorithm
                     // graph.floyd(source, destination);
+                    algorithm = new FloydWarshall();
+                    graph.setAlgorithm(algorithm);
+                    graph.calculateShortestPaths(source);
                     printSubMenu();
                     int subChoice = Integer.parseInt(in.nextLine());
                     if (subChoice == 1) {
                         // use return value of floyd to print the path
+                        algorithm.printPath(source,destination);
                     } else if (subChoice == 2) {
                        // use return value of floyd to print the cost
+                        algorithm.printCost(source,destination);
                     }
                     break;
                 }
