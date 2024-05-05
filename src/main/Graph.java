@@ -23,7 +23,9 @@ public class Graph {
                     numberOfEdges = Integer.parseInt(line[1]);
                     graph = new HashMap<>(numberOfNodes);
                     costMatrix =new int[numberOfNodes][numberOfNodes];
-                    Arrays.fill(costMatrix, Integer.MAX_VALUE);
+                    for (int i =0;i<numberOfNodes;i++)
+                        for (int j =0;j<numberOfNodes;j++)
+                            costMatrix[i][j]=Integer.MAX_VALUE;
                 }
                 else if (line.length == 3) {
                     int source = Integer.parseInt(line[0]);
@@ -146,7 +148,7 @@ public class Graph {
                 if(j==i)continue;
                 for (int k =0; k< numberOfNodes;k++) {
                     if (k == i) continue;
-                    if (this.floydMinimumCosts[j][i] != Integer.MAX_VALUE && this.floydMinimumCosts[i][k] == Integer.MAX_VALUE
+                    if (this.floydMinimumCosts[j][i] != Integer.MAX_VALUE && this.floydMinimumCosts[i][k] != Integer.MAX_VALUE
                         && (this.floydMinimumCosts[j][i] + this.floydMinimumCosts[i][k] < this.floydMinimumCosts[j][k]) ){
                         this.floydMinimumCosts[j][k] = this.floydMinimumCosts[j][i] + this.floydMinimumCosts[i][k];
                         nextNode[j][k] = nextNode[j][i];
