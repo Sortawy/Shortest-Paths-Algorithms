@@ -39,7 +39,23 @@ public class Graph {
             e.printStackTrace();
         }
     }
+    private static class Edge {
+        private int weight;
+        private int destination;
 
+        public Edge(int destination, int weight) {
+            this.destination = destination;
+            this.weight = weight;
+        }
+
+        public int getDestination() {
+            return destination;
+        }
+
+        public int getWeight() {
+            return weight;
+        }
+    }
     private void addEdge(int source, int destination, int weight) {
         if (source >= numberOfNodes || destination >= numberOfNodes) {
             return;
@@ -49,7 +65,6 @@ public class Graph {
         graph.putIfAbsent(destination, new ArrayList<>());
         graph.get(source).add(edge);
     }
-
     public int getNumberOfNodes() {
         return numberOfNodes;
     }
@@ -102,7 +117,7 @@ public class Graph {
         }
         return false;
     }
-
+   /*================Floyd================*/
     public void constructFloydPaths(int[][] nextNode) {
         if (this.floydAllPaths != null) return;
         this.floydAllPaths=new ArrayList[numberOfNodes][numberOfNodes];
@@ -164,7 +179,6 @@ public class Graph {
                 return false;
         return true;
     }
-
     // Used to print one pair of floyd's shortest path
     public void printFloydPath(int u, int v){
         List<Integer> path = this.floydAllPaths[u][v];
@@ -185,22 +199,79 @@ public class Graph {
         System.out.println("Minimum Path Cost Between "+ u +" and " + v
                 + " is " + this.floydMinimumCosts[u][v]);
     }
+    /*================Floyd END================*/
 
-    private static class Edge {
-        private int weight;
-        private int destination;
-
-        public Edge(int destination, int weight) {
-            this.destination = destination;
-            this.weight = weight;
+    /*================Bellman================*/
+    public boolean bellmanFordPaths(int source, int[] cost, int[] parent){
+       
+        for (int i = 0; i < numberOfNodes; i++) {
+            cost[i] = Integer.MAX_VALUE;
+            parent[i] = -1;
         }
+        cost[source] = 0;
 
-        public int getDestination() {
-            return destination;
+        for (int i = 0; i < numberOfNodes - 1; i++) {
+            for (int src = 0; src < numberOfNodes; src++) {
+                for (Edge edge : graph.get(src)) {
+                    int dest = edge.getDestination();
+                    int weight = edge.getWeight();
+                    if (cost[src] != Integer.MAX_VALUE && cost[src] + weight < cost[dest]) {
+                        cost[dest] = cost[src] + weight;
+                        parent[dest] = src;
+                    }
+                }
+            }
         }
-
-        public int getWeight() {
-            return weight;
+        for (int src = 0; src < numberOfNodes; src++) {
+            for (Edge edge : graph.get(src)) {
+                int dest = edge.getDestination();
+                int weight = edge.getWeight();
+                if (cost[src] != Integer.MAX_VALUE && cost[src] + weight < cost[dest]) {
+                    return false;
+                }
+            }
         }
+        return true;
     }
+    public List<Integer> printBellmanPath(int source, int destination, int[] parent){
+        List<Integer> path = new ArrayList<>();
+        int temp = destination;
+        while (temp != source){
+            path.add(temp);
+            temp = parent[temp];
+        }
+        path.add(source);
+        Collections.reverse(path);
+
+        //just for testing 
+        for (int i = 0; i < path.size(); i++){
+            System.out.print(path.get(i));
+            if (i+1 != path.size()){
+                System.out.print(" -> ");
+            }
+        }
+        System.out.println();
+        return path;
+    }
+    public boolean isNegativeCycleBellmanDisconnected(){
+        boolean visited[] = new boolean[numberOfNodes];
+        Arrays.fill(visited, false);
+        int cost[] = new int[numberOfNodes];
+        int parent[] = new int[numberOfNodes];
+
+        
+        for (int i = 0; i < numberOfNodes; i++){
+            if (!visited[i]){
+                if (!bellmanFordPaths(i,cost,parent)){
+                    return true;
+                }
+                for (int j = 0; j < numberOfNodes; j++)
+                        if (cost[j] != Integer.MAX_VALUE)
+                            visited[j] = true;
+            }
+        
+        }
+        return false;
+    }
+    /*================Bellman END================*/
 }
