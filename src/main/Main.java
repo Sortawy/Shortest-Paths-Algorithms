@@ -78,12 +78,15 @@ public class Main {
                 }
                 case 3: {
                     // graph.floyd(source, destination);
+                    graph.calculateShortestPaths("floyd", destination);
                     printSubMenu();
                     int subChoice = Integer.parseInt(in.nextLine());
                     if (subChoice == 1) {
                         // use return value of floyd to print the path
+                        graph.printFloydPath(source,destination);
                     } else if (subChoice == 2) {
                        // use return value of floyd to print the cost
+                        graph.printFloydCost(source,destination);
                     }
                     break;
                 }

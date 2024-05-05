@@ -4,7 +4,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-import static java.lang.Math.min;
 
 public class Graph {
     private Map<Integer, List<Edge>> graph;
@@ -102,7 +101,7 @@ public class Graph {
         return false;
     }
 
-    private void constructFloydPaths(int[][] nextNode) {
+    public void constructFloydPaths(int[][] nextNode) {
         if (this.floydAllPaths != null) return;
         this.floydAllPaths=new ArrayList[numberOfNodes][numberOfNodes];
         for (int u =0;u<numberOfNodes;u++){
@@ -165,21 +164,24 @@ public class Graph {
     }
 
     // Used to print one pair of floyd's shortest path
-    void printPath(List<Integer> path){
+    public void printFloydPath(int u, int v){
+        List<Integer> path = this.floydAllPaths[u][v];
         if (path.isEmpty()){
-            System.out.println("There is no path.");
+            System.out.println("There is no path between "+u+" and "+v);
             return;
         }
-        int totCost=0;
         for (int i = 0; i < path.size();i++){
             System.out.print(path.get(i));
             if (i!=path.size()-1) {
                 System.out.print(" -> ");
-                totCost+=costMatrix[path.get(i)][path.get(i+1)];
             }
         }
         System.out.println();
-        System.out.println("Total cost: " + totCost);
+    }
+
+    public void printFloydCost(int u, int v){
+        System.out.println("Minimum Path Cost Between "+ u +" and " + v
+                + " is " + this.floydMinimumCosts[u][v]);
     }
 
     private static class Edge {
