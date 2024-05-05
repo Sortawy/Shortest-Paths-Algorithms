@@ -15,4 +15,6 @@ public interface Algorithm {
     void setNumberOfNodes(int numberOfNodes);
 
     void setGraph(Map<Integer, List<Edge>> graph);
+  
+     
 }
