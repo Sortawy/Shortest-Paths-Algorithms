@@ -49,6 +49,44 @@ public class Graph {
         return numberOfNodes;
     }
 
+    /**
+     * Method takes requested algorithm name, applies the algorithm
+     * @param algorithm : Name of algorithm requested
+     * @return a boolean : True indicates negative cycles, BUT this return value is redundant
+     *                  for Dijkstra algorithm and shouldn't be used.
+     */
+    public boolean calculateShortestPaths(String algorithm){
+        if (algorithm.equals("dijkstra")){
+            // call dijkstra of all pairs
+        }
+        else if (algorithm.equals("bellman")){
+            // call bellmanford of all pairs
+        }
+        else if (algorithm.equals("floyd")) {
+            // call floyd
+        }
+        return false;
+    }
+
+    /**
+     * Function takes requested algorithm name, the source node and applies the algorithm
+     * @param algorithm : Name of algorithm requested
+     * @param source : The source node of the path
+     * @return a boolean : True indicates negative cycles, BUT this return value is redundant
+     *                  for Dijkstra algorithm and shouldn't be used.
+     */
+    public boolean calculateShortestPaths(String algorithm, int source){
+        if (algorithm.equals("dijkstra")){
+            // call dijkstra of all pairs
+        }
+        else if (algorithm.equals("bellman")){
+            // call bellmanford of all pairs
+        }
+        else if (algorithm.equals("floyd")) {
+            // call floyd
+        }
+        return false;
+    }
     private static class Edge {
         private int weight;
         private int destination;
