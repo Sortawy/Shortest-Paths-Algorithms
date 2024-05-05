@@ -14,5 +14,5 @@ public interface Algorithm {
 
     void setNumberOfNodes(int numberOfNodes);
 
-    void setGraph(Map<Integer, java.util.List<Edge>> graph);
+    void setGraph(Map<Integer, List<Edge>> graph);
 }

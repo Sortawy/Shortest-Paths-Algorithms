@@ -31,7 +31,7 @@ public class BellmanFord implements Algorithm {
     }
 
     @Override
-    public void setGraph(Map<Integer, java.util.List<Edge>> graph) {
+    public void setGraph(Map<Integer, List<Edge>> graph) {
 
     }
 }
