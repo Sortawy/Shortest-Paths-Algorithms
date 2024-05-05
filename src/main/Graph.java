@@ -9,8 +9,6 @@ import java.util.*;
 
 public class Graph {
     private Map<Integer, List<Edge>> graph;
-
-
     private int numberOfNodes;
     private int numberOfEdges;
     private Algorithm algorithm;
