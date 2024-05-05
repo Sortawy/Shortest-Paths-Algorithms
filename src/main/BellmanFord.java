@@ -77,6 +77,7 @@ public class BellmanFord implements Algorithm {
     
     @Override
     public List<Integer> getPath(int u, int v) {
+
         if (parent[u][v] == -1) {
             return null;
         }
@@ -89,6 +90,7 @@ public class BellmanFord implements Algorithm {
         path.add(u);
         Collections.reverse(path);
         return path;
+
     }
 
     @Override
