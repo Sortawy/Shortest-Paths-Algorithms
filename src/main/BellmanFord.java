@@ -1,5 +1,8 @@
 package main;
 
+import java.util.List;
+import java.util.Map;
+
 public class BellmanFord implements Algorithm {
 
     @Override
@@ -28,7 +31,7 @@ public class BellmanFord implements Algorithm {
     }
 
     @Override
-    public void setCostMatrix(int[][] costMatrix) {
+    public void setGraph(Map<Integer, List<Edge>> graph) {
 
     }
 }

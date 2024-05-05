@@ -2,12 +2,14 @@ package main;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class FloydWarshall implements Algorithm {
     private int[][] floydMinimumCosts;
     private List<Integer>[][] floydAllPaths;
     private int numberOfNodes;
     private int [][] costMatrix;
+    private Map<Integer, List<Edge>> graph;
     private boolean containsNegativeCycle;
 
     @Override
@@ -17,6 +19,9 @@ public class FloydWarshall implements Algorithm {
 
     @Override
     public boolean calculateAllPairsShortestPaths() {
+        if (this.costMatrix==null){
+            buildCostMatrix();
+        }
         if (this.floydMinimumCosts == null) {
             int[][] nextNode = new int[numberOfNodes][numberOfNodes];
             return floydWarshall(this.costMatrix, nextNode);
@@ -100,8 +105,23 @@ public class FloydWarshall implements Algorithm {
     }
 
     @Override
-    public void setCostMatrix(int[][] costMatrix) {
-        this.costMatrix=costMatrix;
+    public void setGraph(Map<Integer, List<Edge>> graph) {
+        this.graph=graph;
+    }
+
+    public void buildCostMatrix() {
+        this.costMatrix=new int[numberOfNodes][numberOfNodes];
+        for (int i =0;i<numberOfNodes;i++)
+            for (int j =0;j<numberOfNodes;j++)
+                costMatrix[i][j]=Integer.MAX_VALUE;
+
+        for (int i = 0; i< numberOfNodes; i++){
+            List<Edge> neighbours=graph.getOrDefault(i,null);
+            if (neighbours==null) continue;
+            for (Edge e : neighbours){
+                costMatrix[i][e.getDestination()]=e.getWeight();
+            }
+        }
     }
 
     @Override
