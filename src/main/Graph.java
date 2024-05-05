@@ -164,6 +164,24 @@ public class Graph {
         return true;
     }
 
+    // Used to print one pair of floyd's shortest path
+    void printPath(List<Integer> path){
+        if (path.isEmpty()){
+            System.out.println("There is no path.");
+            return;
+        }
+        int totCost=0;
+        for (int i = 0; i < path.size();i++){
+            System.out.print(path.get(i));
+            if (i!=path.size()-1) {
+                System.out.print(" -> ");
+                totCost+=costMatrix[path.get(i)][path.get(i+1)];
+            }
+        }
+        System.out.println();
+        System.out.println("Total cost: " + totCost);
+    }
+
     private static class Edge {
         private int weight;
         private int destination;
