@@ -75,50 +75,11 @@ public class Main {
                 } else {
                     printAnswer(subChoice, source, destination);
                 }
-                case 2: {
-                    // graph.bellman(source, destination);
-                    algorithm = new BellmanFord();
-                    graph.setAlgorithm(algorithm);
-                    graph.calculateShortestPaths(source);
-                    printSubMenu();
-                    int subChoice = Integer.parseInt(in.nextLine());
-                    if (subChoice == 1) {
-                        // use return value of bellman to print the path
-                        printPath(source, destination);
-                    } else if (subChoice == 2) {
-                        // use return value of bellman to print the cost
-                        printCost(source, destination);
-                    }
-                    break;
-                }
-                case 3: { // chosen floyd algorithm
-                    // graph.floyd(source, destination);
-                    algorithm = new FloydWarshall();
-                    graph.setAlgorithm(algorithm);
-                    graph.calculateShortestPaths(source);
-                    printSubMenu();
-                    int subChoice = Integer.parseInt(in.nextLine());
-                    if (subChoice == 1) {
-                        printPath(source, destination);
-                    } else if (subChoice == 2) {
-                        printCost(source, destination);
-                    }
-                    break;
-                }
-                default:
-                    System.out.println("Invalid choice.");
             }
         }
     }
-    
-    public static void printSubMenu() {
-        System.out.println("1. Print the shortest path");
-        System.out.println("2. Print the cost of the shortest path");
-        System.out.print("Enter your choice: ");
-    }
 
-    //checking negative cycle menu   
-    public static void EnterSubMenu2() {
+    public static void enterAllPairShortestPathMenu() {
         Scanner in = new Scanner(System.in);
         while (true) {
             printAlgorithmsMenu();
@@ -152,21 +113,13 @@ public class Main {
             int choice = Integer.parseInt(in.nextLine());
             if (choice == 3)
                 return;
-            switch (choice) {
-                case 1:
-                    // call method to check negative cycle using bellman
-                    algorithm = new BellmanFord();
-                    graph.setAlgorithm(algorithm);
-                    // // if(graph.containsNegativeCycle())
-                    //     System.out.println("Graph contains negative cycle.");
-                    // else
-                    //     System.out.println("Graph does not contain negative cycle.");
-                    break;
-                case 2:
-                    // call method to check negative cycle using floyd
-                    break;
-                default:
-                    System.out.println("Invalid choice.");
+
+            setAlgorithm(choice);
+
+            if (!graph.calculateShortestPaths()) {
+                System.out.println("Graph contains a negative cycle.");
+            } else {
+                System.out.println("Graph does not contain a negative cycle.");
             }
         }
     }
