@@ -101,6 +101,7 @@ public class BellmanFord implements Algorithm {
     @Override
     public void setNumberOfNodes(int numberOfNodes) {
         this.numberOfNodes = numberOfNodes;
+        this.containsNegativeCycle = false;
         init();
     }
 
