@@ -61,8 +61,6 @@ public class Main {
             int choice = Integer.parseInt(in.nextLine());
             if (choice == 4)
                 return;
-            System.out.print("Enter the destination node: ");
-            int destination = Integer.parseInt(in.nextLine());
 
             setAlgorithm(choice);
             graph.calculateShortestPaths(source);
@@ -73,6 +71,8 @@ public class Main {
                 if (subChoice == 3) {
                     break;
                 } else {
+                    System.out.print("Enter the destination node: ");
+                    int destination = Integer.parseInt(in.nextLine());
                     printAnswer(subChoice, source, destination);
                 }
             }
@@ -91,15 +91,15 @@ public class Main {
             graph.calculateShortestPaths();
 
             while (true) {
-                System.out.print("Enter the source node: ");
-                int source = Integer.parseInt(in.nextLine());
-                System.out.print("Enter the destination node: ");
-                int destination = Integer.parseInt(in.nextLine());
                 printPathOrCostOptionsMenu();
                 int subChoice = Integer.parseInt(in.nextLine());
                 if (subChoice == 3) {
                     break;
                 } else {
+                    System.out.print("Enter the source node: ");
+                    int source = Integer.parseInt(in.nextLine());
+                    System.out.print("Enter the destination node: ");
+                    int destination = Integer.parseInt(in.nextLine());
                     printAnswer(subChoice, source, destination);
                 }
             }
@@ -137,9 +137,9 @@ public class Main {
     public static void printAnswer(int choice, int source, int destination) {
         if (choice == 1) {
             printPath(source, destination);
-        }else if (choice == 2) {
+        } else if (choice == 2) {
             printCost(source, destination);
-        }else {
+        } else {
             System.out.println("Invalid choice.");
         }
     }
