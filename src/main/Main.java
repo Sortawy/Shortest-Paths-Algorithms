@@ -21,10 +21,10 @@ public class Main {
                 case 1 -> {
                     System.out.print("Enter the source node: ");
                     int source = Integer.parseInt(in.nextLine());
-                    EnterPathFromSingleSourceMenu(source);
+                    enterPathFromSingleSourceMenu(source);
                 }
-                case 2 -> EnterAllPairShortestPathMenu();
-                case 3 -> EnterCheckNegativeCycleMenu();
+                case 2 -> enterAllPairShortestPathMenu();
+                case 3 -> enterCheckNegativeCycleMenu();
                 case 4 -> System.exit(0);
                 default -> System.out.println("Invalid choice.");
             }
@@ -54,7 +54,7 @@ public class Main {
         System.out.print("Enter your choice: ");
     }
 
-    public static void EnterPathFromSingleSourceMenu(int source) {
+    public static void enterPathFromSingleSourceMenu(int source) {
         Scanner in = new Scanner(System.in);
         while (true) {
             printAlgorithmsMenu();
@@ -79,7 +79,7 @@ public class Main {
         }
     }
 
-    public static void EnterAllPairShortestPathMenu() {
+    public static void enterAllPairShortestPathMenu() {
         Scanner in = new Scanner(System.in);
         while (true) {
             printAlgorithmsMenu();
@@ -106,7 +106,7 @@ public class Main {
         }
     }
 
-    public static void EnterCheckNegativeCycleMenu() {
+    public static void enterCheckNegativeCycleMenu() {
         Scanner in = new Scanner(System.in);
         while (true) {
             printAlgorithmsMenu();
