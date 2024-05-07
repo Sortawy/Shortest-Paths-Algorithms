@@ -8,11 +8,10 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static main.Main.graph;
+import static org.junit.Assert.*;
 
 public class FloydWarshallTest {
-
     @Test
     public void negativeCycleSmallTest() {
         Graph graph = new Graph("graph_files\\negativeCycleSmall\\negativeCycleSmall.txt");
@@ -207,5 +206,60 @@ public class FloydWarshallTest {
         List<Integer> expectedPath = Arrays.asList(2, 3, 4, 5);
         assertEquals(expectedPath, path);
         assertEquals(-2, algorithm.getCost(2, 5));
+    }
+    @Test
+    public void simpleCaseCheckNegativeSelfLoop(){
+        Graph graph = new Graph("graph_files\\negative-cycle-graphs\\neg1-selfloop.txt");
+        Algorithm algorithm = new FloydWarshall();
+        graph.setAlgorithm(algorithm);
+        assertFalse(graph.calculateShortestPaths(1));
+    }
+    @Test
+    public void simpleCasePositiveSelfLoop(){
+        Graph graph = new Graph("graph_files\\positive-selfloop.txt");
+        Algorithm algorithm = new FloydWarshall();
+        graph.setAlgorithm(algorithm);
+        assertTrue(graph.calculateShortestPaths(1));
+        assertEquals(algorithm.getPath(1,1),Arrays.asList(1));
+    }
+    @Test
+    public void floydTestCaseOne(){
+        Graph graph = new Graph("graph_files\\floyd1.txt");
+        Algorithm algorithm = new FloydWarshall();
+        graph.setAlgorithm(algorithm);
+        List<List<Integer>>expected_costs = Arrays.asList(Arrays.asList(0,3,8,2,-4),
+                Arrays.asList(3,0,11,1,-1),
+                Arrays.asList(-3,0,0,-5,-7),
+                Arrays.asList(2,5,10,0,-2),
+                Arrays.asList(8,11,16,6,0));
+        assertTrue(graph.calculateShortestPaths());
+        for (int i = 0; i< graph.getNumberOfNodes();i++){
+            for (int j =0;j <graph.getNumberOfNodes();j++){
+                assertEquals((int)expected_costs.get(i).get(j),(int)algorithm.getCost(i,j));
+            }
+        }
+    }
+    @Test
+    public void testCaseWithSmallSize(){
+        Graph graph = new Graph("graph_files\\graph3.txt");
+        Algorithm algorithm = new FloydWarshall();
+        graph.setAlgorithm(algorithm);
+        assertTrue(graph.calculateShortestPaths(1));
+        assertEquals(algorithm.getCost(1,9),500);
+        assertEquals(algorithm.getCost(1,10),Integer.MAX_VALUE);
+    }
+    @Test
+    public void checkNegativeCycleTestTwo(){
+        Graph graph = new Graph("graph_files\\negative-cycle-graphs\\neg2.txt");
+        Algorithm algorithm = new FloydWarshall();
+        graph.setAlgorithm(algorithm);
+        assertFalse(graph.calculateShortestPaths());
+    }
+    @Test
+    public void checkNegativeCycleTestThree(){
+        Graph graph = new Graph("graph_files\\negative-cycle-graphs\\neg3.txt");
+        Algorithm algorithm = new FloydWarshall();
+        graph.setAlgorithm(algorithm);
+        assertFalse(graph.calculateShortestPaths());
     }
 }
