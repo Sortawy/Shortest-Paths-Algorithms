@@ -125,7 +125,7 @@ public class FloydWarshall implements Algorithm {
             if (neighbours == null)
                 continue;
             for (Edge e : neighbours) {
-                costMatrix[i][e.getDestination()] = e.getWeight();
+                costMatrix[i][e.getDestination()] = Math.min(e.getWeight(),costMatrix[i][e.getDestination()]);
             }
         }
     }
@@ -134,6 +134,11 @@ public class FloydWarshall implements Algorithm {
     public List<Integer> getPath(int u, int v) {
         List<Integer> path = this.floydAllPaths[u][v];
         if (path.isEmpty()) {
+            if (u==v){
+                List<Integer> singleNode= new ArrayList<>();
+                singleNode.add(u);
+                return singleNode;
+            }
             return null;
         }
         return path;
