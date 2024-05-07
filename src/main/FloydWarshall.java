@@ -1,8 +1,6 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class FloydWarshall implements Algorithm {
     private int[][] floydMinimumCosts;
@@ -11,7 +9,7 @@ public class FloydWarshall implements Algorithm {
     private int[][] costMatrix;
     private Map<Integer, List<Edge>> graph;
     private boolean containsNegativeCycle;
-
+    private int [][] prev; // to build the path
     @Override
     public boolean calculateShortestPathsFromSource(int source) {
         return calculateAllPairsShortestPaths();
@@ -23,80 +21,55 @@ public class FloydWarshall implements Algorithm {
             buildCostMatrix();
         }
         if (this.floydMinimumCosts == null) {
-            int[][] nextNode = new int[numberOfNodes][numberOfNodes];
-            return floydWarshall(this.costMatrix, nextNode);
+            this.prev = new int[numberOfNodes][numberOfNodes];
+            return floydWarshall(this.costMatrix);
         }
         return !containsNegativeCycle;
     }
 
-    public void constructFloydPaths(int[][] nextNode) {
-        if (this.floydAllPaths != null)
-            return;
-        this.floydAllPaths = new ArrayList[numberOfNodes][numberOfNodes];
-        for (int u = 0; u < numberOfNodes; u++) {
-            for (int v = 0; v < numberOfNodes; v++) {
-                if (nextNode[u][v] == -1) {
-                    this.floydAllPaths[u][v] = new ArrayList<>();
-                } else {
-                    int temp = u;
-                    List<Integer> path = new ArrayList<>();
-                    path.add(u);
-                    while (temp != v) {
-                        temp = nextNode[temp][v];
-                        path.add(temp);
-                    }
-                    this.floydAllPaths[u][v] = path;
-                }
-            }
-        }
-    }
-
-    public void setupFloydMatrices(int[][] floydCostMatrix, int[][] nextNode) {
+    public void setupFloydMatrices(int[][] floydCostMatrix) {
         this.floydMinimumCosts = new int[numberOfNodes][numberOfNodes];
         for (int i = 0; i < numberOfNodes; i++) {
             for (int j = 0; j < numberOfNodes; j++) {
-                if (i == j)
+                if (i == j) {
+                    prev[i][i]=i;
+                    if(floydCostMatrix[i][j]<0)this.containsNegativeCycle=true;
                     this.floydMinimumCosts[i][j] = 0;
+                }
                 else
                     this.floydMinimumCosts[i][j] = floydCostMatrix[i][j];
                 if (floydCostMatrix[i][j] != Integer.MAX_VALUE) {
-                    nextNode[i][j] = j;
+                    prev[i][j] = i;
                 } else {
-                    nextNode[i][j] = -1;
+                    prev[i][j] = -1;
                 }
             }
         }
     }
 
-    public boolean floydWarshall(int[][] floydCostMatrix, int[][] nextNode) {
-        setupFloydMatrices(floydCostMatrix, nextNode);
+    public boolean floydWarshall(int[][] floydCostMatrix) {
+        setupFloydMatrices(floydCostMatrix);
         for (int i = 0; i < numberOfNodes; i++) {
             for (int j = 0; j < numberOfNodes; j++) {
-                if (j == i)
-                    continue;
                 for (int k = 0; k < numberOfNodes; k++) {
-                    if (k == i)
-                        continue;
                     if (this.floydMinimumCosts[j][i] != Integer.MAX_VALUE
                             && this.floydMinimumCosts[i][k] != Integer.MAX_VALUE
                             && (this.floydMinimumCosts[j][i]
                                     + this.floydMinimumCosts[i][k] < this.floydMinimumCosts[j][k])) {
                         this.floydMinimumCosts[j][k] = this.floydMinimumCosts[j][i] + this.floydMinimumCosts[i][k];
-                        nextNode[j][k] = nextNode[j][i];
+                        prev[j][k] = prev[i][k];
                     }
                 }
             }
         }
 
-        constructFloydPaths(nextNode);
         /* Now detect negative cycles */
-
         for (int i = 0; i < numberOfNodes; i++)
             if (this.floydMinimumCosts[i][i] < 0) {
                 this.containsNegativeCycle = true;
                 return false;
             }
-        return true;
+        return !this.containsNegativeCycle;
     }
 
     @Override
@@ -125,17 +98,25 @@ public class FloydWarshall implements Algorithm {
             if (neighbours == null)
                 continue;
             for (Edge e : neighbours) {
-                costMatrix[i][e.getDestination()] = e.getWeight();
+                costMatrix[i][e.getDestination()] = Math.min(e.getWeight(),costMatrix[i][e.getDestination()]);
             }
         }
     }
 
     @Override
     public List<Integer> getPath(int u, int v) {
-        List<Integer> path = this.floydAllPaths[u][v];
-        if (path.isEmpty()) {
+        List<Integer> path = new ArrayList<>();
+        if (prev[u][v]==-1){
+            if (u==v)
+                return Arrays.asList(u);
             return null;
         }
+        path.add(v);
+        while (v!=u){
+            v=prev[u][v];
+            path.add(v);
+        }
+        Collections.reverse(path);
         return path;
     }
 }
