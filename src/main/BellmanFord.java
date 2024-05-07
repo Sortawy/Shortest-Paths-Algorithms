@@ -40,9 +40,12 @@ public class BellmanFord implements Algorithm {
             parent[source][i] = -1;
         }
         costMatrix[source][source] = 0;
+        parent[source][source] = source;
 
         for (int i = 0; i < numberOfNodes - 1; i++) {
             for (int src = 0; src < numberOfNodes; src++) {
+                if(!graph.containsKey(src))
+                    continue;
                 for (Edge edge : graph.get(src)) {
                     int dest = edge.getDestination();
                     int weight = edge.getWeight();
@@ -54,6 +57,8 @@ public class BellmanFord implements Algorithm {
             }
         }
         for (int src = 0; src < numberOfNodes; src++) {
+            if(!graph.containsKey(src))
+                    continue;
             for (Edge edge : graph.get(src)) {
                 int dest = edge.getDestination();
                 int weight = edge.getWeight();
@@ -129,5 +134,12 @@ public class BellmanFord implements Algorithm {
         
         }
         return false;
+    }
+    public static void main(String[] args) {
+        Graph graph = new Graph("graph_files\\Dijkstra2.txt");
+        Algorithm algorithm = new BellmanFord();
+        graph.setAlgorithm(algorithm);
+        graph.calculateShortestPaths(1);
+        // System.out.println(algorithm.calculateShortestPaths(1));
     }
 }
