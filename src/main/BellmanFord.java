@@ -35,10 +35,10 @@ public class BellmanFord implements Algorithm {
 
     @Override
     public boolean calculateShortestPathsFromSource(int source) {
-        for (int i = 0; i < numberOfNodes; i++) {
-            costMatrix[source][i] = Integer.MAX_VALUE;
-            parent[source][i] = -1;
-        }
+        // for (int i = 0; i < numberOfNodes; i++) {
+        //     costMatrix[source][i] = Integer.MAX_VALUE;
+        //     parent[source][i] = -1;
+        // }
         costMatrix[source][source] = 0;
         parent[source][source] = source;
 
