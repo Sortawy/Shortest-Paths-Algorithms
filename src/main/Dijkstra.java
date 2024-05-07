@@ -48,6 +48,8 @@ public class Dijkstra implements Algorithm {
             Edge edge = pq.poll();
             int u = edge.getDestination();
             marked[u] = true;
+            if (graph.get(u) == null)
+                continue;
             for (Edge neighbour : graph.get(u)) {
                 int v = neighbour.getDestination();
                 int w = neighbour.getWeight();
