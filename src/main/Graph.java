@@ -35,6 +35,12 @@ public class Graph {
         }
     }
 
+    public Graph(int numberOfNodes, int numberOfEdges) {
+        this.numberOfNodes = numberOfNodes;
+        this.numberOfEdges = numberOfEdges;
+        graph = new HashMap<>(numberOfNodes);
+    }
+
     private void addEdge(int source, int destination, int weight) {
         if (source >= numberOfNodes || destination >= numberOfNodes) {
             return;
@@ -47,6 +53,14 @@ public class Graph {
 
     public int getNumberOfNodes() {
         return numberOfNodes;
+    }
+
+    private void setNumberOfNodes(int numberOfNodes) {
+        this.numberOfNodes = numberOfNodes;
+    }
+
+    private void setNumberOfEdges(int numberOfEdges) {
+        this.numberOfEdges = numberOfEdges;
     }
 
     /**
