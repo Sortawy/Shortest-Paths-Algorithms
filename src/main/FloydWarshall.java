@@ -56,7 +56,7 @@ public class FloydWarshall implements Algorithm {
         for (int i = 0; i < numberOfNodes; i++) {
             for (int j = 0; j < numberOfNodes; j++) {
                 if (i == j)
-                    this.floydMinimumCosts[i][j] = 0;
+                    this.floydMinimumCosts[i][j] = Math.min(floydCostMatrix[i][j],0);
                 else
                     this.floydMinimumCosts[i][j] = floydCostMatrix[i][j];
                 if (floydCostMatrix[i][j] != Integer.MAX_VALUE) {
