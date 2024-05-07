@@ -136,10 +136,11 @@ public class BellmanFord implements Algorithm {
         return false;
     }
     public static void main(String[] args) {
-        Graph graph = new Graph("graph_files\\Dijkstra2.txt");
+        Graph graph = new Graph("graph_files\\largeGraph.txt");
         Algorithm algorithm = new BellmanFord();
         graph.setAlgorithm(algorithm);
-        graph.calculateShortestPaths(1);
-        // System.out.println(algorithm.calculateShortestPaths(1));
+        graph.calculateShortestPaths(3);
+        int [][] localParent = ((BellmanFord)algorithm).parent;
+        System.out.println("test");
     }
 }

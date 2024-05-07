@@ -31,8 +31,8 @@ public class BellmanFordTest {
        boolean isNegativeCycle=!graph.calculateShortestPaths(0);
        assertEquals(true, isNegativeCycle);   
    }
-   @Test
-   public void noNegativeCycleSmallTest() {
+    @Test
+    public void noNegativeCycleSmallTest() {
        Graph graph = new Graph("graph_files\\noNegativeCycleSmall\\noNegativeCycleSmall.txt");
        Algorithm algorithm = new BellmanFord();
        graph.setAlgorithm(algorithm);
@@ -40,16 +40,16 @@ public class BellmanFordTest {
        assertEquals(false, isNegativeCycle);   
     }
    
-   @Test
-   public void noNegativeCycleSmallFromSourceTest() {
+    @Test
+    public void noNegativeCycleSmallFromSourceTest() {
        Graph graph = new Graph("graph_files\\noNegativeCycleSmall\\\\noNegativeCycleSmall.txt");
        Algorithm algorithm = new BellmanFord();
        graph.setAlgorithm(algorithm);
        boolean isNegativeCycle=!graph.calculateShortestPaths(0);
        assertEquals(false, isNegativeCycle);   
    }
-   @Test
-   public void negativeCycleLargeTest() {
+    @Test
+    public void negativeCycleLargeTest() {
        Graph graph = new Graph("graph_files\\negativeCycleLarge\\negativeCycleLarge.txt");
        Algorithm algorithm = new BellmanFord();
        graph.setAlgorithm(algorithm);
@@ -86,7 +86,35 @@ public class BellmanFordTest {
         assertEquals(4, algorithm.getCost(1,7));
     }
 
+    @Test
+    public void minimumCostPathFromSourceTest3(){
+        Graph graph = new Graph("graph_files\\largeGraph.txt");
+        Algorithm algorithm = new BellmanFord();
+        graph.setAlgorithm(algorithm);
 
+        graph.calculateShortestPaths(1);
+        List<Integer> pathToNode0 = algorithm.getPath(1, 2);
+        List<Integer> expectedPathToNode0 = Arrays.asList(1,82,69,78,2);
+        assertEquals(expectedPathToNode0, pathToNode0);
+        
+        graph.calculateShortestPaths(3);
+        List<Integer> pathToNode2 = algorithm.getPath(3, 42);
+        List<Integer> expectedPathToNode2 = Arrays.asList(3,19,85,42);
+        assertEquals(expectedPathToNode2, pathToNode2);
+    
+
+        graph.calculateShortestPaths(75);
+        List<Integer> pathToNode3 = algorithm.getPath(75, 2);
+        List<Integer> expectedPathToNode3 = Arrays.asList(75,80,78,2);
+        assertEquals(expectedPathToNode3, pathToNode3);
+       
+        graph.calculateShortestPaths(1);
+        List<Integer> pathToNode4 = algorithm.getPath(1, 1);
+        List<Integer> expectedPathToNode4 = Arrays.asList(1);
+        assertEquals(expectedPathToNode4, pathToNode4);
+
+    }
+    
     @Test
     public void minimumPathNodesFromSourceTest1(){
         Graph graph = new Graph("graph_files\\mediumGraph\\\\mediumGraph.txt");
@@ -123,6 +151,36 @@ public class BellmanFordTest {
         List<Integer> expectedPathToNode7 = Arrays.asList(1, 3, 4, 5, 6, 7);
         assertEquals(expectedPathToNode7, pathToNode7);
     }
+   
+    @Test
+    public void minimumPathNodesFromSourceTest2(){
+        Graph graph = new Graph("graph_files\\largeGraph.txt");
+        Algorithm algorithm = new BellmanFord();
+        graph.setAlgorithm(algorithm);
+
+        graph.calculateShortestPaths(1);
+        List<Integer> pathToNode0 = algorithm.getPath(1, 2);
+        List<Integer> expectedPathToNode0 = Arrays.asList(1,82,69,78,2);
+        assertEquals(expectedPathToNode0, pathToNode0);
+        
+        graph.calculateShortestPaths(3);
+        List<Integer> pathToNode2 = algorithm.getPath(3, 42);
+        List<Integer> expectedPathToNode2 = Arrays.asList(3,19,85,42);
+        assertEquals(expectedPathToNode2, pathToNode2);
+    
+
+        graph.calculateShortestPaths(75);
+        List<Integer> pathToNode3 = algorithm.getPath(75, 2);
+        List<Integer> expectedPathToNode3 = Arrays.asList(75,80,78,2);
+        assertEquals(expectedPathToNode3, pathToNode3);
+       
+        graph.calculateShortestPaths(1);
+        List<Integer> pathToNode4 = algorithm.getPath(1, 1);
+        List<Integer> expectedPathToNode4 = Arrays.asList(1);
+        assertEquals(expectedPathToNode4, pathToNode4);
+
+    }
+
     @Test
     public void simpleTest() {
         Graph graph = new Graph("graph_files\\Dijkstra1.txt");
@@ -158,7 +216,6 @@ public class BellmanFordTest {
         assertEquals(7, algorithm.getCost(0, 2));
     }
     
-
     @Test
     public void LargetTest() {
         Graph graph = new Graph("graph_files\\Dijkstra2.txt");
