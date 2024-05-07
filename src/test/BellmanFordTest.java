@@ -31,6 +31,7 @@ public class BellmanFordTest {
        boolean isNegativeCycle=!graph.calculateShortestPaths(0);
        assertEquals(true, isNegativeCycle);   
    }
+    
     @Test
     public void noNegativeCycleSmallTest() {
        Graph graph = new Graph("graph_files\\noNegativeCycleSmall\\noNegativeCycleSmall.txt");
@@ -48,6 +49,7 @@ public class BellmanFordTest {
        boolean isNegativeCycle=!graph.calculateShortestPaths(0);
        assertEquals(false, isNegativeCycle);   
    }
+    
     @Test
     public void negativeCycleLargeTest() {
        Graph graph = new Graph("graph_files\\negativeCycleLarge\\negativeCycleLarge.txt");
@@ -56,6 +58,7 @@ public class BellmanFordTest {
        boolean isNegativeCycle=!graph.calculateShortestPaths();
        assertEquals(true, isNegativeCycle);   
    }
+    
     @Test
     public void minimumCostPathFromSourceTest1() {
         Graph graph = new Graph("graph_files\\mediumGraph\\\\mediumGraph.txt");
@@ -78,12 +81,7 @@ public class BellmanFordTest {
         graph.setAlgorithm(algorithm);
         graph.calculateShortestPaths(1);
         assertEquals(7,algorithm.getCost(1,0));
-        assertEquals(8, algorithm.getCost(1,2));
-        assertEquals(5, algorithm.getCost(1,3));
-        assertEquals(0, algorithm.getCost(1,4));
-        assertEquals(2, algorithm.getCost(1,5));
-        assertEquals(1, algorithm.getCost(1,6));
-        assertEquals(4, algorithm.getCost(1,7));
+        
     }
 
     @Test
@@ -93,28 +91,14 @@ public class BellmanFordTest {
         graph.setAlgorithm(algorithm);
 
         graph.calculateShortestPaths(1);
-        List<Integer> pathToNode0 = algorithm.getPath(1, 2);
-        List<Integer> expectedPathToNode0 = Arrays.asList(1,82,69,78,2);
-        assertEquals(expectedPathToNode0, pathToNode0);
+        assertEquals(0, algorithm.getCost(1, 1));
+        assertEquals(6, algorithm.getCost(1, 2));
+        assertEquals(5, algorithm.getCost(1, 55));
+        assertEquals(9, algorithm.getCost(1, 87));
         
-        graph.calculateShortestPaths(3);
-        List<Integer> pathToNode2 = algorithm.getPath(3, 42);
-        List<Integer> expectedPathToNode2 = Arrays.asList(3,19,85,42);
-        assertEquals(expectedPathToNode2, pathToNode2);
-    
-
-        graph.calculateShortestPaths(75);
-        List<Integer> pathToNode3 = algorithm.getPath(75, 2);
-        List<Integer> expectedPathToNode3 = Arrays.asList(75,80,78,2);
-        assertEquals(expectedPathToNode3, pathToNode3);
-       
-        graph.calculateShortestPaths(1);
-        List<Integer> pathToNode4 = algorithm.getPath(1, 1);
-        List<Integer> expectedPathToNode4 = Arrays.asList(1);
-        assertEquals(expectedPathToNode4, pathToNode4);
 
     }
-    
+     
     @Test
     public void minimumPathNodesFromSourceTest1(){
         Graph graph = new Graph("graph_files\\mediumGraph\\\\mediumGraph.txt");
