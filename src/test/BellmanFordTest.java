@@ -184,7 +184,7 @@ public class BellmanFordTest {
         graph.calculateShortestPaths(4);
         List<Integer> path = algorithm.getPath(4, 2);
         assertNull(path);
-        assertEquals(Integer.MAX_VALUE, algorithm.getCost(4, 2));
+        assertEquals(Long.MAX_VALUE, algorithm.getCost(4, 2));
     }
 
     @Test
@@ -243,7 +243,7 @@ public class BellmanFordTest {
         graph.calculateShortestPaths(95);
         List<Integer> path = algorithm.getPath(95, 0);
         assertNull(path);
-        assertEquals(Integer.MAX_VALUE, algorithm.getCost(95, 0));
+        assertEquals(Long.MAX_VALUE, algorithm.getCost(95, 0));
     }
 
     @Test
@@ -266,6 +266,6 @@ public class BellmanFordTest {
         graph.calculateShortestPaths(2);
         List<Integer> path = algorithm.getPath(1, 0);
         assertNull(path);
-        assertEquals(Integer.MAX_VALUE, algorithm.getCost(1, 0));
+        assertEquals(Long.MAX_VALUE, algorithm.getCost(1, 0));
     }
 }
