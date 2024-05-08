@@ -21,7 +21,7 @@ public class MeanTime {
         for (int i = 0; i < m; i++) {
             int source = (int) (Math.random() * n);
             int destination = (int) (Math.random() * n);
-            int weight = (int) (Math.random() * 1000) + 1;
+            long weight = (long) (Math.random() * 1000) + 1;
             Edge edge = new Edge(destination, weight);
             graph.putIfAbsent(source, new ArrayList<>());
             graph.putIfAbsent(destination, new ArrayList<>());
@@ -34,7 +34,7 @@ public class MeanTime {
     /**
      * function to define kind of algrithm to use
      * 
-     * @param String algorithmName 
+     * @param algorithmName : String
      * 
      * return new instance of the algorithm
      */
@@ -57,7 +57,7 @@ public class MeanTime {
      * 
      * @param n number of vertices
      * @param m number of edges
-     * @param algorithm the selected algorithm
+     * @param algorithmName the selected algorithm
      * 
      * @return the mean time to calculate shortest Path for one pair and for all pairs
      */

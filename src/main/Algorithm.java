@@ -10,7 +10,7 @@ public interface Algorithm {
 
     List<Integer> getPath(int u, int v);
 
-    int getCost(int u, int v);
+    long getCost(int u, int v);
 
     void setNumberOfNodes(int numberOfNodes);
 

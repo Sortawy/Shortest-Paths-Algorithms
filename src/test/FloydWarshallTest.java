@@ -133,7 +133,7 @@ public class FloydWarshallTest {
         graph.calculateShortestPaths(4);
         List<Integer> path = algorithm.getPath(4, 2);
         assertNull(path);
-        assertEquals(Integer.MAX_VALUE, algorithm.getCost(4, 2));
+        assertEquals(Long.MAX_VALUE, algorithm.getCost(4, 2));
     }
 
     @Test
@@ -193,7 +193,7 @@ public class FloydWarshallTest {
         graph.calculateShortestPaths(95);
         List<Integer> path = algorithm.getPath(95, 0);
         assertNull(path);
-        assertEquals(Integer.MAX_VALUE, algorithm.getCost(95, 0));
+        assertEquals(Long.MAX_VALUE, algorithm.getCost(95, 0));
     }
 
     @Test
@@ -246,7 +246,7 @@ public class FloydWarshallTest {
         graph.setAlgorithm(algorithm);
         assertTrue(graph.calculateShortestPaths(1));
         assertEquals(algorithm.getCost(1,9),500);
-        assertEquals(algorithm.getCost(1,10),Integer.MAX_VALUE);
+        assertEquals(algorithm.getCost(1,10),Long.MAX_VALUE);
     }
     @Test
     public void checkNegativeCycleTestTwo(){

@@ -10,19 +10,19 @@ public class BellmanFord implements Algorithm {
    
     private Map<Integer, List<Edge>> graph;
     private int numberOfNodes;
-    private int[][] costMatrix;
+    private long[][] costMatrix;
     private int[][] parent;
     private boolean containsNegativeCycle;
 
 
     private void init() {
-        this.costMatrix = new int[numberOfNodes][numberOfNodes];
+        this.costMatrix = new long[numberOfNodes][numberOfNodes];
         for (int i = 0; i < numberOfNodes; i++) {
             for (int j = 0; j < numberOfNodes; j++) {
                 if (i == j)
                     this.costMatrix[i][j] = 0;
                 else
-                    this.costMatrix[i][j] = Integer.MAX_VALUE;
+                    this.costMatrix[i][j] = Long.MAX_VALUE;
             }
         }
         this.parent = new int[numberOfNodes][numberOfNodes];
@@ -36,7 +36,7 @@ public class BellmanFord implements Algorithm {
     @Override
     public boolean calculateShortestPathsFromSource(int source) {
         // for (int i = 0; i < numberOfNodes; i++) {
-        //     costMatrix[source][i] = Integer.MAX_VALUE;
+        //     costMatrix[source][i] = Long.MAX_VALUE;
         //     parent[source][i] = -1;
         // }
         costMatrix[source][source] = 0;
@@ -48,8 +48,8 @@ public class BellmanFord implements Algorithm {
                     continue;
                 for (Edge edge : graph.get(src)) {
                     int dest = edge.getDestination();
-                    int weight = edge.getWeight();
-                    if (costMatrix[source][src] != Integer.MAX_VALUE && costMatrix[source][src] + weight < costMatrix[source][dest]) {
+                    long weight = edge.getWeight();
+                    if (costMatrix[source][src] != Long.MAX_VALUE && costMatrix[source][src] + weight < costMatrix[source][dest]) {
                         costMatrix[source][dest] = costMatrix[source][src] + weight;
                         parent[source][dest] = src;
                     }
@@ -61,8 +61,8 @@ public class BellmanFord implements Algorithm {
                     continue;
             for (Edge edge : graph.get(src)) {
                 int dest = edge.getDestination();
-                int weight = edge.getWeight();
-                if (costMatrix[source][src] != Integer.MAX_VALUE && costMatrix[source][src] + weight < costMatrix[source][dest]) {
+                long weight = edge.getWeight();
+                if (costMatrix[source][src] != Long.MAX_VALUE && costMatrix[source][src] + weight < costMatrix[source][dest]) {
                     containsNegativeCycle = true;
                     return false;
                 }
@@ -99,7 +99,7 @@ public class BellmanFord implements Algorithm {
     }
 
     @Override
-    public int getCost(int u, int v) {
+    public long getCost(int u, int v) {
         return costMatrix[u][v];
     }
 
@@ -128,7 +128,7 @@ public class BellmanFord implements Algorithm {
                     return true;
                 }
                 for (int j = 0; j < numberOfNodes; j++)
-                        if ( costMatrix[src][j] != Integer.MAX_VALUE)
+                        if ( costMatrix[src][j] != Long.MAX_VALUE)
                             visited[j] = true;
             }
         

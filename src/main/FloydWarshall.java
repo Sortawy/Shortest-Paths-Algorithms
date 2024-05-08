@@ -3,10 +3,10 @@ package main;
 import java.util.*;
 
 public class FloydWarshall implements Algorithm {
-    private int[][] floydMinimumCosts;
+    private long[][] floydMinimumCosts;
     private List<Integer>[][] floydAllPaths;
     private int numberOfNodes;
-    private int[][] costMatrix;
+    private long[][] costMatrix;
     private Map<Integer, List<Edge>> graph;
     private boolean containsNegativeCycle;
     private int [][] prev; // to build the path
@@ -27,8 +27,8 @@ public class FloydWarshall implements Algorithm {
         return !containsNegativeCycle;
     }
 
-    public void setupFloydMatrices(int[][] floydCostMatrix) {
-        this.floydMinimumCosts = new int[numberOfNodes][numberOfNodes];
+    public void setupFloydMatrices(long[][] floydCostMatrix) {
+        this.floydMinimumCosts = new long[numberOfNodes][numberOfNodes];
         for (int i = 0; i < numberOfNodes; i++) {
             for (int j = 0; j < numberOfNodes; j++) {
                 if (i == j) {
@@ -38,7 +38,7 @@ public class FloydWarshall implements Algorithm {
                 }
                 else
                     this.floydMinimumCosts[i][j] = floydCostMatrix[i][j];
-                if (floydCostMatrix[i][j] != Integer.MAX_VALUE) {
+                if (floydCostMatrix[i][j] != Long.MAX_VALUE) {
                     prev[i][j] = i;
                 } else {
                     prev[i][j] = -1;
@@ -47,13 +47,13 @@ public class FloydWarshall implements Algorithm {
         }
     }
 
-    public boolean floydWarshall(int[][] floydCostMatrix) {
+    public boolean floydWarshall(long[][] floydCostMatrix) {
         setupFloydMatrices(floydCostMatrix);
         for (int i = 0; i < numberOfNodes; i++) {
             for (int j = 0; j < numberOfNodes; j++) {
                 for (int k = 0; k < numberOfNodes; k++) {
-                    if (this.floydMinimumCosts[j][i] != Integer.MAX_VALUE
-                            && this.floydMinimumCosts[i][k] != Integer.MAX_VALUE
+                    if (this.floydMinimumCosts[j][i] != Long.MAX_VALUE
+                            && this.floydMinimumCosts[i][k] != Long.MAX_VALUE
                             && (this.floydMinimumCosts[j][i]
                                     + this.floydMinimumCosts[i][k] < this.floydMinimumCosts[j][k])) {
                         this.floydMinimumCosts[j][k] = this.floydMinimumCosts[j][i] + this.floydMinimumCosts[i][k];
@@ -73,7 +73,7 @@ public class FloydWarshall implements Algorithm {
     }
 
     @Override
-    public int getCost(int u, int v) {
+    public long getCost(int u, int v) {
         return this.floydMinimumCosts[u][v];
     }
 
@@ -88,10 +88,10 @@ public class FloydWarshall implements Algorithm {
     }
 
     public void buildCostMatrix() {
-        this.costMatrix = new int[numberOfNodes][numberOfNodes];
+        this.costMatrix = new long[numberOfNodes][numberOfNodes];
         for (int i = 0; i < numberOfNodes; i++)
             for (int j = 0; j < numberOfNodes; j++)
-                costMatrix[i][j] = Integer.MAX_VALUE;
+                costMatrix[i][j] = Long.MAX_VALUE;
 
         for (int i = 0; i < numberOfNodes; i++) {
             List<Edge> neighbours = graph.getOrDefault(i, null);

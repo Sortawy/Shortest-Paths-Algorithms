@@ -161,8 +161,8 @@ public class Main {
     }
 
     public static void printCost(int u, int v) {
-        int cost = algorithm.getCost(u, v);
-        if (cost == Integer.MAX_VALUE) {
+        long cost = algorithm.getCost(u, v);
+        if (cost == Long.MAX_VALUE) {
             System.out.println("No path exists between " + u + " and " + v);
             return;
         }
