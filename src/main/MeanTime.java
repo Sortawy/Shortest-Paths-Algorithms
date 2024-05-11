@@ -104,7 +104,7 @@ public class MeanTime {
         String[] algorithmNames = new String[] {"FloydWarshall","Dijkstra","BellmanFord"};
         int[] sizes = {10, 30, 50, 100, 500, 1000};
         for (int n : sizes) {
-            for (int m : new int[] {n*n}) {
+            for (int m : new int[] {n, n*n}) {
                     for (String algorithmName : algorithmNames) {
                         meanTimes.putIfAbsent(algorithmName, new ArrayList<>());
                         meanTimes.get(algorithmName).add(calculateMeanTime(n, m, algorithmName));
