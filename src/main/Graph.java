@@ -4,12 +4,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-import java.util.*;
-
 public class Graph {
     private Map<Integer, List<Edge>> graph;
     private int numberOfNodes;
-    private int numberOfEdges;
     private Algorithm algorithm;
 
     public Graph(String filePath) {
@@ -21,7 +18,6 @@ public class Graph {
                 String[] line = row.split(" ");
                 if (line.length == 2 && numberOfNodes == 0) {
                     numberOfNodes = Integer.parseInt(line[0]);
-                    numberOfEdges = Integer.parseInt(line[1]);
                     graph = new HashMap<>(numberOfNodes);
                 } else if (line.length == 3) {
                     int source = Integer.parseInt(line[0]);
@@ -34,11 +30,10 @@ public class Graph {
             e.printStackTrace();
         }
     }
-
-    public Graph(int numberOfNodes, int numberOfEdges) {
-        this.numberOfNodes = numberOfNodes;
-        this.numberOfEdges = numberOfEdges;
-        graph = new HashMap<>(numberOfNodes);
+    
+    public Graph(Map<Integer,List<Edge>>g){
+        this.graph=g;
+        this.numberOfNodes=g.size();
     }
 
     private void addEdge(int source, int destination, long weight) {
@@ -53,14 +48,6 @@ public class Graph {
 
     public int getNumberOfNodes() {
         return numberOfNodes;
-    }
-
-    private void setNumberOfNodes(int numberOfNodes) {
-        this.numberOfNodes = numberOfNodes;
-    }
-
-    private void setNumberOfEdges(int numberOfEdges) {
-        this.numberOfEdges = numberOfEdges;
     }
 
     /**

@@ -2,6 +2,7 @@ package test;
 
 import main.Algorithm;
 import main.Edge;
+import main.Graph;
 import main.MeanTime;
 
 import java.util.List;
@@ -14,11 +15,13 @@ public class TestSupport {
             graph=MeanTime.generateRandomGraph(size,size);
         else
             graph=MeanTime.generateRandomGraph(size,size*size);
+        Graph g = new Graph(graph);
+        g.setAlgorithm(algorithm);
         long startTime=System.currentTimeMillis();
         if (allPairs)
-            algorithm.calculateAllPairsShortestPaths();
+            g.calculateShortestPaths();
         else
-            algorithm.calculateShortestPathsFromSource(0);
+            g.calculateShortestPaths(0);
         long endTime=System.currentTimeMillis();
         return endTime-startTime;
     }

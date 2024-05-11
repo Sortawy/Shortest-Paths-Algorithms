@@ -17,7 +17,10 @@ public class MeanTime {
      */
     
     public static Map<Integer, List<Edge>> generateRandomGraph(int n, int m) {
-        Map<Integer, List<Edge>> graph = new HashMap<>(n);
+        Map<Integer, List<Edge>> graph = new HashMap<>();
+        for (int i =0;i<n;i++){
+            graph.put(i,new ArrayList<>());
+        }
         for (int i = 0; i < m; i++) {
             int source = (int) (Math.random() * n);
             int destination = (int) (Math.random() * n);
@@ -63,13 +66,14 @@ public class MeanTime {
      */
         
     public static double[] calculateMeanTime(int n, int m, String algorithmName) {
-        int numberOfTrials = 30;
+        int numberOfTrials = 1;
         double totalTimeForPair = 0, totalTimeForAllPairs = 0;
         System.out.println("Calculating mean time for " + algorithmName + " on a graph with " + n + " vertices and " + m + " edges");
         for (int i = 0; i < numberOfTrials; i++) {
             Map<Integer, List<Edge>> graph = generateRandomGraph(n, m);
             System.out.println("OK! "+ i);
             for(int j = 0; j < 2; j++){
+                System.out.println("j = " + j);
                 Algorithm algorithm = getAlgorithm(algorithmName);
                 algorithm.setGraph(graph);
                 algorithm.setNumberOfNodes(n);
@@ -79,7 +83,7 @@ public class MeanTime {
                     double endTime = System.nanoTime();
                     totalTimeForAllPairs += endTime - startTime;
                 } else {
-                    algorithm.calculateShortestPathsFromSource(graph.keySet().iterator().next());  
+                    algorithm.calculateShortestPathsFromSource(graph.keySet().iterator().next());
                     double endTime = System.nanoTime();
                     totalTimeForPair += endTime - startTime;
                 }
@@ -91,16 +95,18 @@ public class MeanTime {
 
     /**
      *  Calculate the mean time of different sizes for each algorithm
-     *  
+     *
      *  return Map<String, List<Double>> : A map that contains the name of the algorithm as a key and a list of mean times as a value
      */
     public static Map<String, List<double[]>> calculateMeanTimeForDifferentSizes() {
         Map<String, List<double[]>> meanTimes = new HashMap<>();
 
         String[] algorithmNames = new String[] {"BellmanFord"};
-        int[] sizes = {10, 30, 50, 100, 500, 1000};
+        // int[] sizes = {500, 1000};
+        int[] sizes = {1000};
+        // int[] sizes = {10, 30, 50, 100, 500, 1000};
         for (int n : sizes) {
-            for (int m : new int[] {n, n*n}) {
+            for (int m : new int[] {n*n}) {
                     for (String algorithmName : algorithmNames) {
                         meanTimes.putIfAbsent(algorithmName, new ArrayList<>());
                         meanTimes.get(algorithmName).add(calculateMeanTime(n, m, algorithmName));
