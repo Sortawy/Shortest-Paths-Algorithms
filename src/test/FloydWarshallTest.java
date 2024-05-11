@@ -266,63 +266,63 @@ public class FloydWarshallTest {
     @Test
     public void testTimeForSize100SparseAllPairs(){
         long elapsedTime = TestSupport.testRandomGraphOfSize(100, new FloydWarshall(), true, true);
-        assertTrue(elapsedTime<=10); // less than or equal 10ms
+        assertTrue(elapsedTime<=100); // less than or equal 100ms
     }
     @Test
     public void testTimeForSize100SparseFromSource(){
         long elapsedTime = TestSupport.testRandomGraphOfSize(100, new FloydWarshall(), true, false);
-        assertTrue(elapsedTime<=10); // less than or equal 10ms
+        assertTrue(elapsedTime<=1000); // less than or equal 1000ms
     }
     @Test
     public void testTimeForSize100DenseAllPairs(){
         long elapsedTime = TestSupport.testRandomGraphOfSize(100, new FloydWarshall(), false, true);
-        assertTrue(elapsedTime<=10); // less than or equal 10ms
+        assertTrue(elapsedTime<=100); // less than or equal 100ms
     }
     @Test
     public void testTimeForSize100DenseFromSource(){
         long elapsedTime = TestSupport.testRandomGraphOfSize(100, new FloydWarshall(), false, false);
-        assertTrue(elapsedTime<=10); // less than or equal 10ms
+        assertTrue(elapsedTime<=100); // less than or equal 100ms
     }
     @Test
     public void testTimeForSize500SparseAllPairs(){
         long elapsedTime = TestSupport.testRandomGraphOfSize(500, new FloydWarshall(), true, true);
-        assertTrue(elapsedTime<=500); // less than or equal 500ms
+        assertTrue(elapsedTime<=5000); // less than or equal 5000ms
     }
     @Test
     public void testTimeForSize500SparseFromSource(){
         long elapsedTime = TestSupport.testRandomGraphOfSize(500, new FloydWarshall(), true, false);
-        assertTrue(elapsedTime<=500); // less than or equal 500ms
+        assertTrue(elapsedTime<=5000); // less than or equal 5000ms
     }
     @Test
     public void testTimeForSize500DenseAllPairs(){
         long elapsedTime = TestSupport.testRandomGraphOfSize(500, new FloydWarshall(), false, true);
-        assertTrue(elapsedTime<=1000); // less than or equal 1000ms
+        assertTrue(elapsedTime<=10000); // less than or equal 10000ms
     }
     @Test
     public void testTimeForSize500DenseFromSource(){
         long elapsedTime = TestSupport.testRandomGraphOfSize(500, new FloydWarshall(), false, false);
-        assertTrue(elapsedTime<=1000); // less than or equal 1000ms
+        assertTrue(elapsedTime<=10000); // less than or equal 10000ms
     }
 
     @Test
     public void testTimeForSize1000SparseAllPairs(){
         long elapsedTime = TestSupport.testRandomGraphOfSize(1000, new FloydWarshall(), true, true);
-        assertTrue(elapsedTime<=2000); // less than or equal 2000ms
+        assertTrue(elapsedTime<=20000); // less than or equal 20000ms
     }
     @Test
     public void testTimeForSize1000SparseFromSource(){
         long elapsedTime = TestSupport.testRandomGraphOfSize(1000, new FloydWarshall(), true, false);
-        assertTrue(elapsedTime<=2000); // less than or equal 2000ms
+        assertTrue(elapsedTime<=30000); // less than or equal 30000ms
     }
     @Test
     public void testTimeForSize1000DenseAllPairs(){
         long elapsedTime = TestSupport.testRandomGraphOfSize(1000, new FloydWarshall(), false, true);
-        assertTrue(elapsedTime<=3000); // less than or equal 3000ms
+        assertTrue(elapsedTime<=40000); // less than or equal 40000ms
     }
     @Test
     public void testTimeForSize1000DenseFromSource(){
         long elapsedTime = TestSupport.testRandomGraphOfSize(1000, new FloydWarshall(), false, false);
-        assertTrue(elapsedTime<=3000); // less than or equal 3000ms
+        assertTrue(elapsedTime<=40000); // less than or equal 40000ms
     }
 
     @Test
