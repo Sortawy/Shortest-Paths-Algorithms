@@ -71,7 +71,7 @@ It works in O(V^3) time complexity. It can detect the presence of a negative cyc
     
 - AbdElRahman Osama
         
-- Ahmed Youssef Sobhy Elgoerany
+- Ahmed Youssef
         
 - Mohamed Mahfouz
         
