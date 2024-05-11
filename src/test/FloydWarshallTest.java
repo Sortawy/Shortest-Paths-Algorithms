@@ -186,7 +186,7 @@ public class FloydWarshallTest {
     }
 
     @Test
-    public void DisconnectedGraphTest() {
+    public void disconnectedGraphTest() {
         Graph graph = new Graph("graph_files\\Disconnected.txt");
         Algorithm algorithm = new FloydWarshall();
         graph.setAlgorithm(algorithm);
@@ -261,5 +261,145 @@ public class FloydWarshallTest {
         Algorithm algorithm = new FloydWarshall();
         graph.setAlgorithm(algorithm);
         assertFalse(graph.calculateShortestPaths());
+    }
+
+    @Test
+    public void testTimeForSize100SparseAllPairs(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(100, new FloydWarshall(), true, true);
+        assertTrue(elapsedTime<=10); // less than or equal 10ms
+    }
+    @Test
+    public void testTimeForSize100SparseFromSource(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(100, new FloydWarshall(), true, false);
+        assertTrue(elapsedTime<=10); // less than or equal 10ms
+    }
+    @Test
+    public void testTimeForSize100DenseAllPairs(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(100, new FloydWarshall(), false, true);
+        assertTrue(elapsedTime<=10); // less than or equal 10ms
+    }
+    @Test
+    public void testTimeForSize100DenseFromSource(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(100, new FloydWarshall(), false, false);
+        assertTrue(elapsedTime<=10); // less than or equal 10ms
+    }
+    @Test
+    public void testTimeForSize500SparseAllPairs(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(500, new FloydWarshall(), true, true);
+        assertTrue(elapsedTime<=100); // less than or equal 100ms
+    }
+    @Test
+    public void testTimeForSize500SparseFromSource(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(500, new FloydWarshall(), true, false);
+        assertTrue(elapsedTime<=100); // less than or equal 100ms
+    }
+    @Test
+    public void testTimeForSize500DenseAllPairs(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(500, new FloydWarshall(), false, true);
+        assertTrue(elapsedTime<=100); // less than or equal 100ms
+    }
+    @Test
+    public void testTimeForSize500DenseFromSource(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(500, new FloydWarshall(), false, false);
+        assertTrue(elapsedTime<=100); // less than or equal 100ms
+    }
+
+    @Test
+    public void testTimeForSize1000SparseAllPairs(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(1000, new FloydWarshall(), true, true);
+        assertTrue(elapsedTime<=1500); // less than or equal 1500ms
+    }
+    @Test
+    public void testTimeForSize1000SparseFromSource(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(1000, new FloydWarshall(), true, false);
+        assertTrue(elapsedTime<=1500); // less than or equal 1500ms
+    }
+    @Test
+    public void testTimeForSize1000DenseAllPairs(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(1000, new FloydWarshall(), false, true);
+        assertTrue(elapsedTime<=1500); // less than or equal 1500ms
+    }
+    @Test
+    public void testTimeForSize1000DenseFromSource(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(1000, new FloydWarshall(), false, false);
+        assertTrue(elapsedTime<=1500); // less than or equal 1500ms
+    }
+
+    @Test
+    public void testOnePathsMediumGraphSizePositiveWeights(){
+        Graph graph = new Graph("graph_files\\medium-1-positive.txt");
+        Algorithm algorithm = new FloydWarshall();
+        graph.setAlgorithm(algorithm);
+        assertTrue(graph.calculateShortestPaths());
+        assertEquals(algorithm.getPath(0,5),Arrays.asList(0,3,6,5));
+        assertEquals(algorithm.getCost(0,5),6);
+        assertEquals(algorithm.getPath(2,6),Arrays.asList(2,0,3,6));
+        assertEquals(algorithm.getCost(2,6),9);
+        assertEquals(algorithm.getPath(1,6),Arrays.asList(1,3,6));
+        assertEquals(algorithm.getCost(1,6),7);
+    }
+    @Test
+    public void testTwoPathsMediumGraphSizePositiveWeights(){
+        Graph graph = new Graph("graph_files\\medium-2-positive.txt");
+        Algorithm algorithm = new FloydWarshall();
+        graph.setAlgorithm(algorithm);
+        assertTrue(graph.calculateShortestPaths(0));
+        assertEquals(algorithm.getCost(8,5), Long.MAX_VALUE); // unreachable
+        assertEquals(algorithm.getCost(0,3), 2);
+        assertEquals(algorithm.getPath(0,3),Arrays.asList(0,3));
+        assertEquals(algorithm.getCost(0,5), 53);
+        assertEquals(algorithm.getPath(0,5),Arrays.asList(0,3,5));
+    }
+    @Test
+    public void testPathsLargeGraphSizePositiveWeights(){
+        // should give same results as testOneMediumPositive
+        Graph graph = new Graph("graph_files\\large-1-positive.txt");
+        Algorithm algorithm = new FloydWarshall();
+        graph.setAlgorithm(algorithm);
+        assertTrue(graph.calculateShortestPaths());
+        assertEquals(algorithm.getPath(0,5),Arrays.asList(0,3,6,5));
+        assertEquals(algorithm.getCost(0,5),6);
+        assertEquals(algorithm.getPath(2,6),Arrays.asList(2,0,3,6));
+        assertEquals(algorithm.getCost(2,6),9);
+        assertEquals(algorithm.getPath(1,6),Arrays.asList(1,3,6));
+        assertEquals(algorithm.getCost(1,6),7);
+    }
+    @Test
+    public void testOnePathsMediumGraphSizeNegativeWeights(){
+        Graph graph = new Graph("graph_files\\medium-1-negative.txt");
+        Algorithm algorithm = new FloydWarshall();
+        graph.setAlgorithm(algorithm);
+        assertTrue(graph.calculateShortestPaths());
+        List<List<Long>> expected = List.of(List.of(0L,1L,-3L,2L,-4L),
+                                                List.of(3L,0L,-4L,1L,-1L),
+                                                List.of(7L,4L,0L,5L,3L),
+                                                List.of(2L,-1L,-5L,0L,-2L),
+                                                List.of(8L,5L,1L,6L,0L));
+        for (int i = 0; i < graph.getNumberOfNodes(); i++){
+            for (int j = 0; j < graph.getNumberOfNodes(); j++){
+                assertEquals(expected.get(i).get(j).longValue(),algorithm.getCost(i,j));
+            }
+        }
+        assertEquals(Arrays.asList(4,3,2,1),algorithm.getPath(4,1));
+    }
+    @Test
+    public void testPathsLargeGraphSizeNegativeWeights(){
+        // should give same results as testOneMediumNegative
+        Graph graph = new Graph("graph_files\\large-1-negative.txt");
+        Algorithm algorithm = new FloydWarshall();
+        graph.setAlgorithm(algorithm);
+        assertTrue(graph.calculateShortestPaths());
+        List<List<Long>> expected = List.of(List.of(0L,1L,-3L,2L,-4L),
+                List.of(3L,0L,-4L,1L,-1L),
+                List.of(7L,4L,0L,5L,3L),
+                List.of(2L,-1L,-5L,0L,-2L),
+                List.of(8L,5L,1L,6L,0L));
+        int originalOneSize=5;
+        for (int i = 0; i < originalOneSize; i++){
+            for (int j = 0; j < originalOneSize; j++){
+                assertEquals(expected.get(i).get(j).longValue(),algorithm.getCost(i,j));
+            }
+        }
+        assertEquals(Arrays.asList(4,3,2,1),algorithm.getPath(4,1));
     }
 }
