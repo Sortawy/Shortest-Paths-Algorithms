@@ -43,9 +43,7 @@ public class BellmanFord implements Algorithm {
         parent[source][source] = source;
 
         for (int i = 0; i < numberOfNodes - 1; i++) {
-            for (int src = 0; src < numberOfNodes; src++) {
-                if(!graph.containsKey(src))
-                    continue;
+            graph.forEach((src, edges) -> {
                 for (Edge edge : graph.get(src)) {
                     int dest = edge.getDestination();
                     long weight = edge.getWeight();
@@ -54,7 +52,7 @@ public class BellmanFord implements Algorithm {
                         parent[source][dest] = src;
                     }
                 }
-            }
+            });
         }
         for (int src = 0; src < numberOfNodes; src++) {
             if(!graph.containsKey(src))
