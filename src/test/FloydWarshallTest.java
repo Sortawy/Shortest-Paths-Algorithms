@@ -1,67 +1,55 @@
 package test;
 
 import main.Algorithm;
-import main.BellmanFord;
+import main.FloydWarshall;
 import main.Graph;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static main.Main.graph;
+import static org.junit.Assert.*;
 
-public class BellmanFordTest {
-   
+public class FloydWarshallTest {
     @Test
     public void negativeCycleSmallTest() {
         Graph graph = new Graph("graph_files\\negativeCycleSmall\\negativeCycleSmall.txt");
-        Algorithm algorithm = new BellmanFord();
+        Algorithm algorithm = new FloydWarshall();
         graph.setAlgorithm(algorithm);
         boolean isNegativeCycle=!graph.calculateShortestPaths();
-        assertEquals(true, isNegativeCycle);   
+        assertEquals(true, isNegativeCycle);
     }
-    
+
     @Test
     public void negativeCycleSmallFromSourceTest() {
-       Graph graph = new Graph("graph_files\\negativeCycleSmall\\negativeCycleSmall.txt");
-       Algorithm algorithm = new BellmanFord();
-       graph.setAlgorithm(algorithm);
-       boolean isNegativeCycle=!graph.calculateShortestPaths(0);
-       assertEquals(true, isNegativeCycle);   
-   }
-    
+        Graph graph = new Graph("graph_files\\negativeCycleSmall\\negativeCycleSmall.txt");
+        Algorithm algorithm = new FloydWarshall();
+        graph.setAlgorithm(algorithm);
+        boolean isNegativeCycle=!graph.calculateShortestPaths(0);
+        assertEquals(true, isNegativeCycle);
+    }
     @Test
     public void noNegativeCycleSmallTest() {
-       Graph graph = new Graph("graph_files\\noNegativeCycleSmall\\noNegativeCycleSmall.txt");
-       Algorithm algorithm = new BellmanFord();
-       graph.setAlgorithm(algorithm);
-       boolean isNegativeCycle=!graph.calculateShortestPaths();
-       assertEquals(false, isNegativeCycle);   
+        Graph graph = new Graph("graph_files\\noNegativeCycleSmall\\noNegativeCycleSmall.txt");
+        Algorithm algorithm = new FloydWarshall();
+        graph.setAlgorithm(algorithm);
+        boolean isNegativeCycle=!graph.calculateShortestPaths();
+        assertEquals(false, isNegativeCycle);
     }
-   
+
     @Test
     public void noNegativeCycleSmallFromSourceTest() {
-       Graph graph = new Graph("graph_files\\noNegativeCycleSmall\\\\noNegativeCycleSmall.txt");
-       Algorithm algorithm = new BellmanFord();
-       graph.setAlgorithm(algorithm);
-       boolean isNegativeCycle=!graph.calculateShortestPaths(0);
-       assertEquals(false, isNegativeCycle);   
-   }
-    
-    @Test
-    public void negativeCycleLargeTest() {
-       Graph graph = new Graph("graph_files\\negativeCycleLarge\\negativeCycleLarge.txt");
-       Algorithm algorithm = new BellmanFord();
-       graph.setAlgorithm(algorithm);
-       boolean isNegativeCycle=!graph.calculateShortestPaths();
-       assertEquals(true, isNegativeCycle);   
-   }
-    
+        Graph graph = new Graph("graph_files\\noNegativeCycleSmall\\\\noNegativeCycleSmall.txt");
+        Algorithm algorithm = new FloydWarshall();
+        graph.setAlgorithm(algorithm);
+        boolean isNegativeCycle=!graph.calculateShortestPaths(0);
+        assertEquals(false, isNegativeCycle);
+    }
     @Test
     public void minimumCostPathFromSourceTest1() {
         Graph graph = new Graph("graph_files\\mediumGraph\\\\mediumGraph.txt");
-        Algorithm algorithm = new BellmanFord();
+        Algorithm algorithm = new FloydWarshall();
         graph.setAlgorithm(algorithm);
         graph.calculateShortestPaths(0);
         assertEquals(4, algorithm.getCost(0, 1));
@@ -76,35 +64,26 @@ public class BellmanFordTest {
     @Test
     public void minimumCostPathFromSourceTest2() {
         Graph graph = new Graph("graph_files\\mediumGraph\\\\mediumGraph.txt");
-        Algorithm algorithm = new BellmanFord();
+        Algorithm algorithm = new FloydWarshall();
         graph.setAlgorithm(algorithm);
         graph.calculateShortestPaths(1);
         assertEquals(7,algorithm.getCost(1,0));
-        
+        assertEquals(8, algorithm.getCost(1,2));
+        assertEquals(5, algorithm.getCost(1,3));
+        assertEquals(0, algorithm.getCost(1,4));
+        assertEquals(2, algorithm.getCost(1,5));
+        assertEquals(1, algorithm.getCost(1,6));
+        assertEquals(4, algorithm.getCost(1,7));
     }
 
-    @Test
-    public void minimumCostPathFromSourceTest3(){
-        Graph graph = new Graph("graph_files\\largeGraph.txt");
-        Algorithm algorithm = new BellmanFord();
-        graph.setAlgorithm(algorithm);
 
-        graph.calculateShortestPaths(1);
-        assertEquals(0, algorithm.getCost(1, 1));
-        assertEquals(6, algorithm.getCost(1, 2));
-        assertEquals(5, algorithm.getCost(1, 55));
-        assertEquals(9, algorithm.getCost(1, 87));
-        
-
-    }
-     
     @Test
     public void minimumPathNodesFromSourceTest1(){
         Graph graph = new Graph("graph_files\\mediumGraph\\\\mediumGraph.txt");
-        Algorithm algorithm = new BellmanFord();
+        Algorithm algorithm = new FloydWarshall();
         graph.setAlgorithm(algorithm);
         graph.calculateShortestPaths(1);
-        
+
         List<Integer> pathToNode0 = algorithm.getPath(1, 0);
         List<Integer> expectedPathToNode0 = Arrays.asList(1, 3, 4, 5, 6, 7, 0);
         assertEquals(expectedPathToNode0, pathToNode0);
@@ -112,7 +91,7 @@ public class BellmanFordTest {
         List<Integer> pathToNode2 = algorithm.getPath(1, 2);
         List<Integer> expectedPathToNode2 = Arrays.asList(1, 2);
         assertEquals(expectedPathToNode2, pathToNode2);
-    
+
 
         List<Integer> pathToNode3 = algorithm.getPath(1, 3);
         List<Integer> expectedPathToNode3 = Arrays.asList(1, 3);
@@ -134,40 +113,10 @@ public class BellmanFordTest {
         List<Integer> expectedPathToNode7 = Arrays.asList(1, 3, 4, 5, 6, 7);
         assertEquals(expectedPathToNode7, pathToNode7);
     }
-   
-    @Test
-    public void minimumPathNodesFromSourceTest2(){
-        Graph graph = new Graph("graph_files\\largeGraph.txt");
-        Algorithm algorithm = new BellmanFord();
-        graph.setAlgorithm(algorithm);
-
-        graph.calculateShortestPaths(1);
-        List<Integer> pathToNode0 = algorithm.getPath(1, 2);
-        List<Integer> expectedPathToNode0 = Arrays.asList(1,82,69,78,2);
-        assertEquals(expectedPathToNode0, pathToNode0);
-        
-        graph.calculateShortestPaths(3);
-        List<Integer> pathToNode2 = algorithm.getPath(3, 42);
-        List<Integer> expectedPathToNode2 = Arrays.asList(3,19,85,42);
-        assertEquals(expectedPathToNode2, pathToNode2);
-    
-
-        graph.calculateShortestPaths(75);
-        List<Integer> pathToNode3 = algorithm.getPath(75, 2);
-        List<Integer> expectedPathToNode3 = Arrays.asList(75,80,78,2);
-        assertEquals(expectedPathToNode3, pathToNode3);
-       
-        graph.calculateShortestPaths(1);
-        List<Integer> pathToNode4 = algorithm.getPath(1, 1);
-        List<Integer> expectedPathToNode4 = Arrays.asList(1);
-        assertEquals(expectedPathToNode4, pathToNode4);
-
-    }
-
     @Test
     public void simpleTest() {
         Graph graph = new Graph("graph_files\\Dijkstra1.txt");
-        Algorithm algorithm = new BellmanFord();
+        Algorithm algorithm = new FloydWarshall();
         graph.setAlgorithm(algorithm);
         graph.calculateShortestPaths(1);
         List<Integer> path = algorithm.getPath(1, 0);
@@ -179,7 +128,7 @@ public class BellmanFordTest {
     @Test
     public void NoPathTest() {
         Graph graph = new Graph("graph_files\\Dijkstra1.txt");
-        Algorithm algorithm = new BellmanFord();
+        Algorithm algorithm = new FloydWarshall();
         graph.setAlgorithm(algorithm);
         graph.calculateShortestPaths(4);
         List<Integer> path = algorithm.getPath(4, 2);
@@ -190,7 +139,7 @@ public class BellmanFordTest {
     @Test
     public void NegativeWeightTest() {
         Graph graph = new Graph("graph_files\\graph2.txt");
-        Algorithm algorithm = new BellmanFord();
+        Algorithm algorithm = new FloydWarshall();
         graph.setAlgorithm(algorithm);
         graph.calculateShortestPaths(0);
         List<Integer> path = algorithm.getPath(0, 2);
@@ -198,11 +147,12 @@ public class BellmanFordTest {
         assertEquals(expectedPath, path);
         assertEquals(7, algorithm.getCost(0, 2));
     }
-    
+
+
     @Test
     public void LargetTest() {
         Graph graph = new Graph("graph_files\\Dijkstra2.txt");
-        Algorithm algorithm = new BellmanFord();
+        Algorithm algorithm = new FloydWarshall();
         graph.setAlgorithm(algorithm);
         graph.calculateShortestPaths(1);
         List<Integer> path = algorithm.getPath(1, 0);
@@ -214,7 +164,7 @@ public class BellmanFordTest {
     @Test
     public void sameNodeTest() {
         Graph graph = new Graph("graph_files\\Dijkstra1.txt");
-        Algorithm algorithm = new BellmanFord();
+        Algorithm algorithm = new FloydWarshall();
         graph.setAlgorithm(algorithm);
         graph.calculateShortestPaths(1);
         List<Integer> path = algorithm.getPath(1, 1);
@@ -226,7 +176,7 @@ public class BellmanFordTest {
     @Test
     public void singleNodeTest() {
         Graph graph = new Graph("graph_files\\SingleNode.txt");
-        Algorithm algorithm = new BellmanFord();
+        Algorithm algorithm = new FloydWarshall();
         graph.setAlgorithm(algorithm);
         graph.calculateShortestPaths(0);
         List<Integer> path = algorithm.getPath(0, 0);
@@ -238,7 +188,7 @@ public class BellmanFordTest {
     @Test
     public void DisconnectedGraphTest() {
         Graph graph = new Graph("graph_files\\Disconnected.txt");
-        Algorithm algorithm = new BellmanFord();
+        Algorithm algorithm = new FloydWarshall();
         graph.setAlgorithm(algorithm);
         graph.calculateShortestPaths(95);
         List<Integer> path = algorithm.getPath(95, 0);
@@ -249,7 +199,7 @@ public class BellmanFordTest {
     @Test
     public void DuplicatesGraphTest() {
         Graph graph = new Graph("graph_files\\Duplicates.txt");
-        Algorithm algorithm = new BellmanFord();
+        Algorithm algorithm = new FloydWarshall();
         graph.setAlgorithm(algorithm);
         graph.calculateShortestPaths();
         List<Integer> path = algorithm.getPath(2, 5);
@@ -257,15 +207,59 @@ public class BellmanFordTest {
         assertEquals(expectedPath, path);
         assertEquals(-2, algorithm.getCost(2, 5));
     }
-
     @Test
-    public void NotCalculatedTest() {
-        Graph graph = new Graph("graph_files\\Dijkstra1.txt");
-        Algorithm algorithm = new BellmanFord();
+    public void simpleCaseCheckNegativeSelfLoop(){
+        Graph graph = new Graph("graph_files\\negative-cycle-graphs\\neg1-selfloop.txt");
+        Algorithm algorithm = new FloydWarshall();
         graph.setAlgorithm(algorithm);
-        graph.calculateShortestPaths(2);
-        List<Integer> path = algorithm.getPath(1, 0);
-        assertNull(path);
-        assertEquals(Long.MAX_VALUE, algorithm.getCost(1, 0));
+        assertFalse(graph.calculateShortestPaths(1));
+    }
+    @Test
+    public void simpleCasePositiveSelfLoop(){
+        Graph graph = new Graph("graph_files\\positive-selfloop.txt");
+        Algorithm algorithm = new FloydWarshall();
+        graph.setAlgorithm(algorithm);
+        assertTrue(graph.calculateShortestPaths(1));
+        assertEquals(algorithm.getPath(1,1),Arrays.asList(1));
+    }
+    @Test
+    public void floydTestCaseOne(){
+        Graph graph = new Graph("graph_files\\floyd1.txt");
+        Algorithm algorithm = new FloydWarshall();
+        graph.setAlgorithm(algorithm);
+        List<List<Integer>>expected_costs = Arrays.asList(Arrays.asList(0,3,8,2,-4),
+                Arrays.asList(3,0,11,1,-1),
+                Arrays.asList(-3,0,0,-5,-7),
+                Arrays.asList(2,5,10,0,-2),
+                Arrays.asList(8,11,16,6,0));
+        assertTrue(graph.calculateShortestPaths());
+        for (int i = 0; i< graph.getNumberOfNodes();i++){
+            for (int j =0;j <graph.getNumberOfNodes();j++){
+                assertEquals((int)expected_costs.get(i).get(j),(int)algorithm.getCost(i,j));
+            }
+        }
+    }
+    @Test
+    public void testCaseWithSmallSize(){
+        Graph graph = new Graph("graph_files\\graph3.txt");
+        Algorithm algorithm = new FloydWarshall();
+        graph.setAlgorithm(algorithm);
+        assertTrue(graph.calculateShortestPaths(1));
+        assertEquals(algorithm.getCost(1,9),500);
+        assertEquals(algorithm.getCost(1,10),Long.MAX_VALUE);
+    }
+    @Test
+    public void checkNegativeCycleTestTwo(){
+        Graph graph = new Graph("graph_files\\negative-cycle-graphs\\neg2.txt");
+        Algorithm algorithm = new FloydWarshall();
+        graph.setAlgorithm(algorithm);
+        assertFalse(graph.calculateShortestPaths());
+    }
+    @Test
+    public void checkNegativeCycleTestThree(){
+        Graph graph = new Graph("graph_files\\negative-cycle-graphs\\neg3.txt");
+        Algorithm algorithm = new FloydWarshall();
+        graph.setAlgorithm(algorithm);
+        assertFalse(graph.calculateShortestPaths());
     }
 }

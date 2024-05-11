@@ -10,17 +10,17 @@ public class Dijkstra implements Algorithm {
 
     private Map<Integer, List<Edge>> graph;
     private int numberOfNodes;
-    private int[][] costMatrix;
+    private long[][] costMatrix;
     private int[][] parent;
 
     private void init() {
-        this.costMatrix = new int[numberOfNodes][numberOfNodes];
+        this.costMatrix = new long[numberOfNodes][numberOfNodes];
         for (int i = 0; i < numberOfNodes; i++) {
             for (int j = 0; j < numberOfNodes; j++) {
                 if (i == j)
                     this.costMatrix[i][j] = 0;
                 else
-                    this.costMatrix[i][j] = Integer.MAX_VALUE;
+                    this.costMatrix[i][j] = Long.MAX_VALUE;
             }
         }
         this.parent = new int[numberOfNodes][numberOfNodes];
@@ -37,7 +37,7 @@ public class Dijkstra implements Algorithm {
         PriorityQueue<Edge> pq = new PriorityQueue<>((a, b) -> {
             if (a.getWeight() == b.getWeight())
                 return a.getDestination() - b.getDestination();
-            return a.getWeight() - b.getWeight();
+            return Long.compare(a.getWeight(), b.getWeight());
         });
         pq.add(new Edge(source, 0));
         boolean[] marked = new boolean[numberOfNodes];
@@ -52,7 +52,7 @@ public class Dijkstra implements Algorithm {
                 continue;
             for (Edge neighbour : graph.get(u)) {
                 int v = neighbour.getDestination();
-                int w = neighbour.getWeight();
+                long w = neighbour.getWeight();
                 if (!marked[v] && costMatrix[source][v] > costMatrix[source][u] + w) {
                     costMatrix[source][v] = costMatrix[source][u] + w;
                     parent[source][v] = u;
@@ -88,7 +88,7 @@ public class Dijkstra implements Algorithm {
     }
 
     @Override
-    public int getCost(int u, int v) {
+    public long getCost(int u, int v) {
         return costMatrix[u][v];
     }
 

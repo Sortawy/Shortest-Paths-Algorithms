@@ -26,7 +26,7 @@ public class Graph {
                 } else if (line.length == 3) {
                     int source = Integer.parseInt(line[0]);
                     int destination = Integer.parseInt(line[1]);
-                    int weight = Integer.parseInt(line[2]);
+                    long weight = Long.parseLong(line[2]);
                     addEdge(source, destination, weight);
                 }
             }
@@ -41,7 +41,7 @@ public class Graph {
         graph = new HashMap<>(numberOfNodes);
     }
 
-    private void addEdge(int source, int destination, int weight) {
+    private void addEdge(int source, int destination, long weight) {
         if (source >= numberOfNodes || destination >= numberOfNodes) {
             return;
         }

@@ -1,10 +1,10 @@
 package main;
 
 public class Edge {
-    private int weight;
+    private long weight;
     private int destination;
 
-    public Edge(int destination, int weight) {
+    public Edge(int destination, long weight) {
         this.destination = destination;
         this.weight = weight;
     }
@@ -13,7 +13,7 @@ public class Edge {
         return destination;
     }
 
-    public int getWeight() {
+    public long getWeight() {
         return weight;
     }
 }
