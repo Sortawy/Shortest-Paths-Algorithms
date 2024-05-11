@@ -67,6 +67,7 @@ public class MeanTime {
         double totalTimeForPair = 0, totalTimeForAllPairs = 0;
         for (int i = 0; i < numberOfTrials; i++) {
             Map<Integer, List<Edge>> graph = generateRandomGraph(n, m);
+            System.out.println("OK! "+ i);
             for(int j = 0; j < 2; j++){
                 Algorithm algorithm = getAlgorithm(algorithmName);
                 algorithm.setGraph(graph);
@@ -91,10 +92,9 @@ public class MeanTime {
      *  
      *  return Map<String, List<Double>> : A map that contains the name of the algorithm as a key and a list of mean times as a value
      */
-
     public static Map<String, List<double[]>> calculateMeanTimeForDifferentSizes() {
         Map<String, List<double[]>> meanTimes = new HashMap<>();
-        String[] algorithmNames = new String[] {"Dijkstra", "BellmanFord"};
+        String[] algorithmNames = new String[] {"BellmanFord"};
         int[] sizes = {10, 30, 50, 100, 500, 1000};
         for (int n : sizes) {
             for (int m : new int[] {n, n*n}) {
