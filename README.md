@@ -44,7 +44,7 @@ It works in O(V^3) time complexity. It can detect the presence of a negative cyc
 | 500 | Sparse | 0.01 | 3.98 | 78.45 |
 | 500 | Dense | 10.36 | 978.67 | 164.09 |
 | 1000 | Sparse | 0.02 | 15.59 | 594.52 |
-| 1000 | Dense | 57.80 | x | 1216.22 |
+| 1000 | Dense | 57.80 | 14186.08 | 1216.22 |
 
 ## Mean Time to get the shortest path between all pairs of nodes (ms)
 
@@ -61,7 +61,7 @@ It works in O(V^3) time complexity. It can detect the presence of a negative cyc
 | 500 | Sparse | 1.37 | 1881.79 | 80.91 |
 | 500 | Dense | 7203.32 | 661665.36 | 162.42 |
 | 1000 | Sparse | 3.02 | 16333.73 | 599.27 |
-| 1000 | Dense | 75831.92 | x | 1187.51 |
+| 1000 | Dense | 75831.92 | 4623312.27 | 1187.51 |
 
 ---
 
