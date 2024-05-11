@@ -54,19 +54,22 @@ public class BellmanFord implements Algorithm {
                 }
             });
         }
-        for (int src = 0; src < numberOfNodes; src++) {
-            if(!graph.containsKey(src))
-                    continue;
+        //  boolean localContainsNegativeCycle = false;
+        graph.forEach((src, edges) -> {
             for (Edge edge : graph.get(src)) {
                 int dest = edge.getDestination();
                 long weight = edge.getWeight();
                 if (costMatrix[source][src] != Long.MAX_VALUE && costMatrix[source][src] + weight < costMatrix[source][dest]) {
                     containsNegativeCycle = true;
-                    return false;
+                    break;
+                    // return false;
+                    // localContainsNegativeCycle = true;
+                    
                 }
             }
-        }
-        return true;
+            
+        });
+        return !containsNegativeCycle;
     }
 
     @Override
