@@ -60,7 +60,7 @@ public class Dijkstra implements Algorithm {
                 }
             }
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class Dijkstra implements Algorithm {
         for (int i = 0; i < numberOfNodes; i++) {
             calculateShortestPathsFromSource(i);
         }
-        return false;
+        return true;
     }
 
     @Override

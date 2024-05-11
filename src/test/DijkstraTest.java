@@ -2,6 +2,7 @@ package test;
 
 import main.Algorithm;
 import main.Dijkstra;
+import main.Dijkstra;
 import main.Graph;
 import org.junit.Test;
 
@@ -9,7 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class DijkstraTest {
     @Test
@@ -126,5 +129,108 @@ public class DijkstraTest {
         List<Integer> path = algorithm.getPath(1, 0);
         assertNull(path);
         assertEquals(Long.MAX_VALUE, algorithm.getCost(1, 0));
+    }
+    @Test
+    public void simpleCasePositiveSelfLoop(){
+        Graph graph = new Graph("graph_files\\positive-selfloop.txt");
+        Algorithm algorithm = new Dijkstra();
+        graph.setAlgorithm(algorithm);
+        assertTrue(graph.calculateShortestPaths(1));
+        assertEquals(algorithm.getPath(1,1),Arrays.asList(1));
+    }
+    @Test
+    public void testCaseWithSmallSize(){
+        Graph graph = new Graph("graph_files\\graph3.txt");
+        Algorithm algorithm = new Dijkstra();
+        graph.setAlgorithm(algorithm);
+        assertTrue(graph.calculateShortestPaths(1));
+        assertEquals(algorithm.getCost(1,9),500);
+        assertEquals(algorithm.getCost(1,10),Long.MAX_VALUE);
+    }
+
+    @Test
+    public void testTimeForSize100SparseAllPairs(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(100, new Dijkstra(), true, true);
+        assertTrue(elapsedTime<=10); // less than or equal 10ms
+    }
+    @Test
+    public void testTimeForSize100SparseFromSource(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(100, new Dijkstra(), true, false);
+        assertTrue(elapsedTime<=10); // less than or equal 10ms
+    }
+    @Test
+    public void testTimeForSize100DenseAllPairs(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(100, new Dijkstra(), false, true);
+        assertTrue(elapsedTime<=1000); // less than or equal 1000ms
+    }
+    @Test
+    public void testTimeForSize100DenseFromSource(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(100, new Dijkstra(), false, false);
+        assertTrue(elapsedTime<=10); // less than or equal 10ms
+    }
+    @Test
+    public void testTimeForSize500SparseAllPairs(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(500, new Dijkstra(), true, true);
+        assertTrue(elapsedTime<=3000); // less than or equal 3000ms
+    }
+    @Test
+    public void testTimeForSize500SparseFromSource(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(500, new Dijkstra(), true, false);
+        assertTrue(elapsedTime<=300); // less than or equal 300ms
+    }
+    @Test
+    public void testTimeForSize500DenseFromSource(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(500, new Dijkstra(), false, false);
+        assertTrue(elapsedTime<=600); // less than or equal 600ms
+    }
+    @Test
+    public void testTimeForSize1000SparseFromSource(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(1000, new Dijkstra(), true, false);
+        assertTrue(elapsedTime<=1200); // less than or equal 1200ms
+    }
+    @Test
+    public void testTimeForSize1000DenseFromSource(){
+        long elapsedTime = TestSupport.testRandomGraphOfSize(1000, new Dijkstra(), false, false);
+        assertTrue(elapsedTime<=2700); // less than or equal 2700ms
+    }
+
+    @Test
+    public void testOnePathsMediumGraphSizePositiveWeights(){
+        Graph graph = new Graph("graph_files\\medium-1-positive.txt");
+        Algorithm algorithm = new Dijkstra();
+        graph.setAlgorithm(algorithm);
+        assertTrue(graph.calculateShortestPaths());
+        assertEquals(algorithm.getPath(0,5),Arrays.asList(0,3,6,5));
+        assertEquals(algorithm.getCost(0,5),6);
+        assertEquals(algorithm.getPath(2,6),Arrays.asList(2,0,3,6));
+        assertEquals(algorithm.getCost(2,6),9);
+        assertEquals(algorithm.getPath(1,6),Arrays.asList(1,3,6));
+        assertEquals(algorithm.getCost(1,6),7);
+    }
+    @Test
+    public void testTwoPathsMediumGraphSizePositiveWeights(){
+        Graph graph = new Graph("graph_files\\medium-2-positive.txt");
+        Algorithm algorithm = new Dijkstra();
+        graph.setAlgorithm(algorithm);
+        assertTrue(graph.calculateShortestPaths(0));
+        assertEquals(algorithm.getCost(8,5), Long.MAX_VALUE); // unreachable
+        assertEquals(algorithm.getCost(0,3), 2);
+        assertEquals(algorithm.getPath(0,3),Arrays.asList(0,3));
+        assertEquals(algorithm.getCost(0,5), 53);
+        assertEquals(algorithm.getPath(0,5),Arrays.asList(0,3,5));
+    }
+    @Test
+    public void testPathsLargeGraphSizePositiveWeights(){
+        // should give same results as testOneMediumPositive
+        Graph graph = new Graph("graph_files\\large-1-positive.txt");
+        Algorithm algorithm = new Dijkstra();
+        graph.setAlgorithm(algorithm);
+        assertTrue(graph.calculateShortestPaths());
+        assertEquals(algorithm.getPath(0,5),Arrays.asList(0,3,6,5));
+        assertEquals(algorithm.getCost(0,5),6);
+        assertEquals(algorithm.getPath(2,6),Arrays.asList(2,0,3,6));
+        assertEquals(algorithm.getCost(2,6),9);
+        assertEquals(algorithm.getPath(1,6),Arrays.asList(1,3,6));
+        assertEquals(algorithm.getCost(1,6),7);
     }
 }
