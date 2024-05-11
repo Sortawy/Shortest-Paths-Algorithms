@@ -46,7 +46,12 @@ public class Main {
         System.out.println("4. Go back to previous menu");
         System.out.print("Enter your choice: ");
     }
-
+    public static void printNegativeCycleAlgorithmsMenu() {
+        System.out.println("1. Bellman-Ford Algorithm");
+        System.out.println("2. Floyd-Warshall Algorithm");
+        System.out.println("3. Go back to previous menu");
+        System.out.print("Enter your choice: ");
+    }
     public static void printPathOrCostOptionsMenu() {
         System.out.println("1. Print the shortest path");
         System.out.println("2. Print the cost of the shortest path");
@@ -109,12 +114,12 @@ public class Main {
     public static void enterCheckNegativeCycleMenu() {
         Scanner in = new Scanner(System.in);
         while (true) {
-            printAlgorithmsMenu();
+            printNegativeCycleAlgorithmsMenu();
             int choice = Integer.parseInt(in.nextLine());
             if (choice == 3)
                 return;
 
-            setAlgorithm(choice);
+            setAlgorithm(choice+1);
 
             if (!graph.calculateShortestPaths()) {
                 System.out.println("Graph contains a negative cycle.");
