@@ -64,11 +64,26 @@ public class FloydWarshall implements Algorithm {
         }
 
         /* Now detect negative cycles */
+        for (int i = 0; i < numberOfNodes; i++) {
+            for (int j = 0; j < numberOfNodes; j++) {
+                for (int k = 0; k < numberOfNodes; k++) {
+                    if (this.floydMinimumCosts[j][i] != Long.MAX_VALUE
+                            && this.floydMinimumCosts[i][k] != Long.MAX_VALUE
+                            && (this.floydMinimumCosts[j][i]
+                            + this.floydMinimumCosts[i][k] < this.floydMinimumCosts[j][k])) {
+                        this.floydMinimumCosts[j][k] = Long.MIN_VALUE;
+                        this.containsNegativeCycle=true;
+                    }
+                }
+            }
+        }
+        /* If break after finding negative cycles
         for (int i = 0; i < numberOfNodes; i++)
             if (this.floydMinimumCosts[i][i] < 0) {
                 this.containsNegativeCycle = true;
                 return false;
             }
+        */
         return !this.containsNegativeCycle;
     }
 

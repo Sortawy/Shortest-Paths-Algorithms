@@ -62,8 +62,8 @@ public class BellmanFord implements Algorithm {
                 if (costMatrix[source][src] != Long.MAX_VALUE && costMatrix[source][src] + weight < costMatrix[source][dest]) {
                     containsNegativeCycle = true;
                     // For -infinity costs: COMMENT & UNCOMMENT next two lines respectively
-                    break;
-                    // costMatrix[source][dest]=Long.MIN_VALUE;
+                    // break;
+                    costMatrix[source][dest]=Long.MIN_VALUE;
                 }
             }
             
