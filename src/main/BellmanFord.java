@@ -61,10 +61,9 @@ public class BellmanFord implements Algorithm {
                 long weight = edge.getWeight();
                 if (costMatrix[source][src] != Long.MAX_VALUE && costMatrix[source][src] + weight < costMatrix[source][dest]) {
                     containsNegativeCycle = true;
+                    // For -infinity costs: COMMENT & UNCOMMENT next two lines respectively
                     break;
-                    // return false;
-                    // localContainsNegativeCycle = true;
-                    
+                    // costMatrix[source][dest]=Long.MIN_VALUE;
                 }
             }
             
